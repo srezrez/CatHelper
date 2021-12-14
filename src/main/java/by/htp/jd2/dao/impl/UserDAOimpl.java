@@ -3,6 +3,7 @@ package by.htp.jd2.dao.impl;
 import by.htp.jd2.dao.DAOException;
 import by.htp.jd2.dao.DAOFactory;
 import by.htp.jd2.dao.UserDAO;
+import by.htp.jd2.entity.User;
 
 import java.sql.SQLException;
 
@@ -21,5 +22,25 @@ public class UserDAOimpl implements UserDAO {
             }
         }
         return "admin";
+    }
+
+    @Override
+    public void add(User entity) {
+
+    }
+
+    @Override
+    public void delete(int idPk) {
+
+    }
+
+    @Override
+    public User get(int idPk) {
+        return null;
+    }
+
+    @Override
+    public void update(User entity) {
+
     }
 }

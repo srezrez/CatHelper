@@ -4,6 +4,6 @@ import by.htp.jd2.entity.UserInfo;
 
 public interface UserService {
 
-    String authorisation(String login, String password) throws ServiceException;
-    boolean registration(UserInfo userInfo);
+    String signIn(String login, String password) throws ServiceException;
+    boolean signUp(UserInfo userInfo);
 }

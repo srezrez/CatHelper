@@ -9,7 +9,7 @@ import by.htp.jd2.service.UserService;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public String authorisation(String login, String password) throws ServiceException {
+    public String signIn(String login, String password) throws ServiceException {
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registration(UserInfo userInfo) {
+    public boolean signUp(UserInfo userInfo) {
         return false;
     }
 }

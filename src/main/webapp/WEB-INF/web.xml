@@ -26,5 +26,13 @@ xsi:schemaLocation="http://xmls.jcp.org/xml/ns/javaee http://xmls.jcp.org/xml/ns
     <servlet-name>Controller</servlet-name>
     <url-pattern>/MyController</url-pattern>
   </servlet-mapping>
+  
+<!--  <listener>-->
+<!--    <listener-class>by.htp.jd2.controller.ProjectServletContextListener</listener-class>-->
+<!--  </listener>-->
+
+  <listener>
+  <listener-class>by.htp.jd2.util.AppContextListener</listener-class>
+  </listener>
 
 </web-app>

@@ -21,8 +21,10 @@ public class UserDAOimpl implements UserDAO {
 
         try {
             Connection con = connectionPool.takeConnection();
-            connectionPool.returnConnection(con);
+            con.close();
         } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
             throw new DAOException(e);
         }
         return "admin";
@@ -31,7 +33,8 @@ public class UserDAOimpl implements UserDAO {
     @Override
     public void add(User user) throws DAOException {
 
-        try(Connection con = connectionPool.takeConnection()) {
+        try {
+            Connection con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT_USER);
 
             ps.setString(1, user.getName());
@@ -43,7 +46,7 @@ public class UserDAOimpl implements UserDAO {
             ps.setString(7, String.valueOf(user.getActivity().getIdPk()));
 
             ps.executeUpdate();
-            connectionPool.returnConnection(con);
+            con.close();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -58,14 +61,15 @@ public class UserDAOimpl implements UserDAO {
     @Override
     public User get(int idPk) throws DAOException {
         User user = null;
-        try(Connection con = connectionPool.takeConnection()) {
+        try {
+            Connection con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_SELECT_USER);
             ps.setString(1, String.valueOf(idPk));
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 user = createUser(rs);
             }
-            connectionPool.returnConnection(con);
+            con.close();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {

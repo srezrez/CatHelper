@@ -102,11 +102,6 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void returnConnection(Connection con){
-        connectionQueue.add(con);
-        givenAwayConQueue.remove(con);
-    }
-
     public void closeConnection(Connection connection, Statement st, ResultSet rs) {
         try {
             connection.close();

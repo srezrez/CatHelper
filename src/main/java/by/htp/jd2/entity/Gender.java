@@ -1,16 +1,14 @@
 package by.htp.jd2.entity;
 
-import java.util.Objects;
+public enum Gender {
 
-public enum Role {
-
-    ADMIN (1, "Администратор"),
-    USER (2, "Пользователь");
+    MALE (1, "Мужской"),
+    FEMALE (2, "Женский");
 
     private int idPk;
     private String title;
 
-    Role(int idPk, String title) {
+    Gender(int idPk, String title) {
         this.idPk = idPk;
         this.title = title;
     }
@@ -23,9 +21,9 @@ public enum Role {
         return title;
     }
 
-    public static Role getById(int idPk) {
-        for(Role role : values()) {
-            if(role.idPk == idPk) return role;
+    public static Gender getById(int idPk) {
+        for(Gender gender : values()) {
+            if(gender.idPk == idPk) return gender;
         }
         return null;
     }

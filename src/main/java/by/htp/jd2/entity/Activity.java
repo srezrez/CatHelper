@@ -2,36 +2,31 @@ package by.htp.jd2.entity;
 
 import java.util.Objects;
 
-public class Activity extends AbstractEntity{
+public enum Activity {
 
+    ACTIVE (1, "Действующий"),
+    BLOCKED (2, "Заблокированный");
+
+    private int idPk;
     private String title;
 
-    public Activity() {
+    Activity(int idPk, String title) {
+        this.idPk = idPk;
+        this.title = title;
     }
 
-    public Activity(String title) {
-        this.title = title;
+    public int getIdPk() {
+        return idPk;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Activity)) return false;
-        if (!super.equals(o)) return false;
-        Activity activity = (Activity) o;
-        return Objects.equals(title, activity.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), title);
+    public static Activity getById(int idPk) {
+        for(Activity act : values()) {
+            if(act.idPk == idPk) return act;
+        }
+        return null;
     }
 }

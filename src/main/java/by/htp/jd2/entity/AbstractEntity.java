@@ -6,6 +6,13 @@ public abstract class AbstractEntity {
 
     private int idPk;
 
+    public AbstractEntity() {
+    }
+
+    public AbstractEntity(int idPk) {
+        this.idPk = idPk;
+    }
+
     public int getIdPk() {
         return idPk;
     }

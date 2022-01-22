@@ -8,6 +8,10 @@ public class Breed extends AbstractEntity{
 
     public Breed() {
     }
+    public Breed(int idPk, String title) {
+        super(idPk);
+        this.title = title;
+    }
 
     public Breed(String title) {
         this.title = title;

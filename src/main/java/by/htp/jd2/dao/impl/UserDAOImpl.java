@@ -11,7 +11,7 @@ import by.htp.jd2.entity.User;
 
 import java.sql.*;
 
-public class UserDAOimpl implements UserDAO {
+public class UserDAOImpl implements UserDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private static final String SQL_INSERT_USER = "INSERT INTO user(name, surname, birth_date, email, password, id_role, id_activity) values ( ?, ?, ?, ?, ?, ?, ?)";
@@ -50,7 +50,6 @@ public class UserDAOimpl implements UserDAO {
             ps.setInt(7, user.getRole().getIdPk());
 
             ps.executeUpdate();
-            con.close();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -97,7 +96,6 @@ public class UserDAOimpl implements UserDAO {
             while(rs.next()){
                 user = createUser(rs);
             }
-            con.close();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {

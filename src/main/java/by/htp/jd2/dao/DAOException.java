@@ -5,7 +5,7 @@ public class DAOException extends Exception {
         super(e);
     }
 
-    public DAOException() {
+    public DAOException(Exception e, String message) {
     }
 }
 

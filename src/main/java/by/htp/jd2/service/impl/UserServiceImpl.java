@@ -3,7 +3,7 @@ package by.htp.jd2.service.impl;
 import by.htp.jd2.dao.DAOException;
 import by.htp.jd2.dao.DAOFactory;
 import by.htp.jd2.dao.UserDAO;
-import by.htp.jd2.entity.UserInfo;
+import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
 
@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
         UserDAO userDAO = factory.getUserDAO();
 
         try {
+            User user = userDAO.get(1);
             String role = userDAO.authorization("login", "password");
         } catch (DAOException e) {
             throw new ServiceException();
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signUp(UserInfo userInfo) {
+    public boolean signUp(User userInfo) {
         return false;
     }
 }

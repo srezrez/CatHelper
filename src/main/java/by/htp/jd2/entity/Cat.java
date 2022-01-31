@@ -14,6 +14,10 @@ public class Cat extends AbstractEntity{
     public Cat() {
     }
 
+    public Cat(int idPk){
+        super(idPk);
+    }
+
     public Cat(String name, Date birthDate, User owner, Breed breed, Gender gender) {
         this.name = name;
         this.birthDate = birthDate;
@@ -65,7 +69,9 @@ public class Cat extends AbstractEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Cat)) return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         if (!super.equals(o)) return false;
         Cat cat = (Cat) o;
         return Objects.equals(name, cat.name) && Objects.equals(birthDate, cat.birthDate) && Objects.equals(owner, cat.owner) && Objects.equals(breed, cat.breed) && gender == cat.gender;

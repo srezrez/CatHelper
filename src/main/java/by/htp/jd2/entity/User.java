@@ -15,6 +15,10 @@ public class User extends AbstractEntity{
 
     public User() {
     }
+    
+    public User(int idPk){
+        super(idPk);
+    }
 
     public User(String name, String surname, Date birthDate, String email, String password, Role role, Activity activity) {
         this.name = name;
@@ -85,7 +89,9 @@ public class User extends AbstractEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         if (!super.equals(o)) return false;
         User user = (User) o;
         return name.equals(user.name) && surname.equals(user.surname) && birthDate.equals(user.birthDate) && email.equals(user.email) && password.equals(user.password) && role.equals(user.role) && activity.equals(user.activity);

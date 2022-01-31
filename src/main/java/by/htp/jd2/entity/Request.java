@@ -65,7 +65,9 @@ public class Request extends AbstractEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Request)) return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         if (!super.equals(o)) return false;
         Request request = (Request) o;
         return dateRequest.equals(request.dateRequest) && Objects.equals(dateIssue, request.dateIssue) && requester.equals(request.requester) && cat.equals(request.cat) && status == request.status;

@@ -13,6 +13,10 @@ public class Breed extends AbstractEntity{
         this.title = title;
     }
 
+    public Breed(int idPk) {
+        super(idPk);
+    }
+
     public Breed(String title) {
         this.title = title;
     }
@@ -28,7 +32,9 @@ public class Breed extends AbstractEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Breed)) return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         if (!super.equals(o)) return false;
         Breed breed = (Breed) o;
         return Objects.equals(title, breed.title);

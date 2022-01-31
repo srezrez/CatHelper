@@ -54,7 +54,9 @@ public class Document extends AbstractEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Document)) return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
         if (!super.equals(o)) return false;
         Document document = (Document) o;
         return path.equals(document.path) && description.equals(document.description) && cat.equals(document.cat) && documentType == document.documentType;

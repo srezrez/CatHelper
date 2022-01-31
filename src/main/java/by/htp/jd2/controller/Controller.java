@@ -24,12 +24,9 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private final CommandProvider provider = new CommandProvider();
-	//private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-	//private UserService userService = serviceFactory.getUserService();
 
 	public Controller() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,43 +47,15 @@ public class Controller extends HttpServlet {
 	
 	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
 
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-//		Connection con = null;
-//		Statement st = null;
-//		ResultSet rs = null;
-//
-//		try{
-//			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/test?useSSL=false", "root", "root");
-//			System.out.println("OK!");
-//
-//		} catch (SQLException throwables) {
-//			throwables.printStackTrace();
-//		}
-
-//		DBResourceManager dbResourceManager = new DBResourceManager();
-//		System.out.println("===============" + dbResourceManager.getValue("db.user") + "================");
-
-		ServiceFactory serviceFactory = ServiceFactory.getInstance();
-		try {
-			serviceFactory.getUserService().signIn("login", "pass");
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-
-		Locale usLocale = new Locale("en", "US");
-		ResourceBundle bundle = ResourceBundle.getBundle("prop", usLocale);
-		System.out.println(bundle.getString("prop.key1"));
 		HttpSession session = request.getSession(false);
 		if(session == null) {
 			HttpSession sessionNew = request.getSession(true);
-			//sessionNew.setAttribute("sessionExpired", true);
 			response.sendRedirect(SIGN_IN_PAGE_REDIRECT);
-		} else {
-			String commandName = request.getParameter(COMMAND_PARAM);
-			System.out.println("Command name = " + commandName);
-			Command command = provider.getCommand(commandName);
-			command.execute(request, response);
+			return;
 		}
+		String commandName = request.getParameter(COMMAND_PARAM);
+		Command command = provider.getCommand(commandName);
+		command.execute(request, response);
 
 	}
 }

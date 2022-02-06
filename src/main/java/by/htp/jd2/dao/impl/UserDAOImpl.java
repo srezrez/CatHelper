@@ -18,20 +18,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_SELECT_USER = "select * from user where id_user = ?";
     private static final String SQL_DELETE_USER = "delete from user where id_user = ?";
     private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where idUser = ?";
-
-    @Override
-    public String authorization(String login, String password) throws DAOException {
-
-        try {
-            Connection con = connectionPool.takeConnection();
-            con.close();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return "admin";
-    }
+    private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
 
     @Override
     public void add(User user) throws DAOException {
@@ -147,5 +134,31 @@ public class UserDAOImpl implements UserDAO {
             }
         }
 
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        User user = null;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                user = createUser(rs);
+            }
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return user;
     }
 }

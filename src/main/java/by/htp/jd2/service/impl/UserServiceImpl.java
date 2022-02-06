@@ -16,7 +16,6 @@ public class UserServiceImpl implements UserService {
 
         try {
             User user = userDAO.get(1);
-            String role = userDAO.authorization("login", "password");
         } catch (DAOException e) {
             throw new ServiceException();
         }
@@ -28,7 +27,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean signUp(User userInfo) {
-        return false;
+    public boolean signUp(User user) {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            if(userDAO.getByEmail(user.getEmail()) != null)
+                return false;
+            userDAO.add(user);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

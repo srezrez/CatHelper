@@ -24,6 +24,7 @@ public class ConstantPool {
 	//parameter
 	public static final String NAME_PARAMETER = "name";
 	public static final String SURNAME_PARAMETER = "surname";
+	public static final String BIRTH_DATE_PARAMETER = "birth-date";
 	public static final String EMAIL_PARAMETER = "email";
 	public static final String PASSWORD_PARAMETER = "password";
 	public static final String ERROR_MS_PARAMETER = "error-ms";
@@ -42,6 +43,7 @@ public class ConstantPool {
 	//message
 	public static final String SIGN_IN_FAIL_MESSAGE = "Something went wrong. Logination failed";
 	public static final String SIGN_UP_FAIL_MESSAGE = "Something went wrong. Registration failed";
+	public static final String SIGN_UP_USER_EXISTS_MESSAGE = "User with this email already exists";
 	public static final String SIGN_UP_SUCCESS_MESSAGE = "You've created new account!";
 
 	//db parameters

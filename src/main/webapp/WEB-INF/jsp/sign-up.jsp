@@ -18,6 +18,8 @@
 	<input id="surname" type="text" placeholder="Surname" name ="surname" minlength="2" maxlength="25"/>
 	<span class="error" aria-live="polite"></span>
 	<br />
+	<input id="birth-date" type="date" name="birth-date" min="2018-01-01" max="2018-12-31" value="2018-07-22">
+	<br />
 	<input id="email" type="email" placeholder="Email" name ="email" minlength="8" maxlength="50"/>
 	<span class="error" aria-live="polite"></span>
 	<br />

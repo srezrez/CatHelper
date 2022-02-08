@@ -1,6 +1,8 @@
 package by.htp.jd2.controller.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import by.htp.jd2.controller.Command;
+import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceFactory;
 import by.htp.jd2.service.UserService;
 import by.htp.jd2.service.impl.UserServiceImpl;
@@ -17,26 +19,19 @@ import static by.htp.jd2.util.ConstantPool.*;
 
 public class SignInCommand implements Command {
 
-	//public UserService userService = UserServiceImpl.getInstance();
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserService userService = factory.getUserService();
-
 		String email = request.getParameter(EMAIL_PARAMETER);
 		String password = request.getParameter(PASSWORD_PARAMETER);
-		
-		HttpSession session = request.getSession(true);
-		session.setAttribute(USERNAME_ATTRIBUTE, email);
-		
-		boolean flag = !email.equals("bad@bad.com");
-		if(flag) {
-			response.sendRedirect(MAIN_PAGE_REDIRECT);
-		} else {
-			response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_IN_FAIL_MESSAGE);
+		try {
+			userService.signIn(email, password);
+		} catch (ServiceException e) {
+			e.printStackTrace();
 		}
+		response.sendRedirect(MAIN_PAGE_REDIRECT);
 		
 	}
 

@@ -105,6 +105,7 @@ public class UserDAOImpl implements UserDAO {
             user.setSurname(rs.getString("surname"));
             user.setBirthDate(rs.getDate("birth_date"));
             user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
             user.setRole(Role.getById(rs.getInt("id_role")));
             user.setActivity(Activity.getById(rs.getInt("id_activity")));
         } catch (SQLException e) {

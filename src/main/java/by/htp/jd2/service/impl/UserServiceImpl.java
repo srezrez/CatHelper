@@ -1,5 +1,6 @@
 package by.htp.jd2.service.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import by.htp.jd2.dao.DAOException;
 import by.htp.jd2.dao.DAOFactory;
 import by.htp.jd2.dao.UserDAO;
@@ -9,21 +10,15 @@ import by.htp.jd2.service.UserService;
 
 public class UserServiceImpl implements UserService {
     @Override
-    public String signIn(String login, String password) throws ServiceException {
+    public User signIn(String email, String password) throws ServiceException {
 
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
-
-        try {
-            User user = userDAO.get(1);
-        } catch (DAOException e) {
-            throw new ServiceException();
+        User user = userDAO.getByEmail(email);
+        if(user != null && (BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified) {
+            return user;
         }
-        //1 Validation
-
-        //2 Realization
-
-        return "admin";
+        return null;
     }
 
     @Override

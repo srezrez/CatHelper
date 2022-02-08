@@ -5,11 +5,11 @@ import by.htp.jd2.dao.DAOException;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.dao.connectionpool.ConnectionPoolException;
 import by.htp.jd2.entity.Breed;
+import by.htp.jd2.entity.Cat;
+import by.htp.jd2.entity.Document;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BreedDAOImpl implements BreedDAO {
@@ -18,6 +18,7 @@ public class BreedDAOImpl implements BreedDAO {
     private static final String SQL_INSERT_BREED = "INSERT INTO breed(title) values (?)";
     private static final String SQL_DELETE_BREED = "delete from breed where id_breed = ?";
     private static final String SQL_SELECT_BREED = "select * from breed where id_breed = ?";
+    private static final String SQL_SELECT_ALL_BREED = "select * from breed";
 
 
     @Override
@@ -96,7 +97,27 @@ public class BreedDAOImpl implements BreedDAO {
     }
 
     @Override
-    public List<Breed> getAll() {
-        return null;
+    public List<Breed> getAll() throws DAOException {
+        List<Breed> breeds = new ArrayList<Breed>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_BREED);
+            while(rs.next()) {
+                breeds.add(new Breed(rs.getInt("id_breed"), rs.getString("title")));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return breeds;
     }
 }

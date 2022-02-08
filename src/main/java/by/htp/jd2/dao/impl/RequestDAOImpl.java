@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class RequestDAOImpl implements RequestDAO {
 
@@ -134,5 +135,10 @@ public class RequestDAOImpl implements RequestDAO {
                 throw new DAOException(e);
             }
         }
+    }
+
+    @Override
+    public List<Request> getAll() {
+        return null;
     }
 }

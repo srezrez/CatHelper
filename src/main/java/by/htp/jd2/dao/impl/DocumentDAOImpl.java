@@ -9,6 +9,7 @@ import by.htp.jd2.entity.Document;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DocumentDAOImpl implements DocumentDAO {
 
@@ -61,5 +62,10 @@ public class DocumentDAOImpl implements DocumentDAO {
     @Override
     public void update(Document entity) throws DAOException {
 
+    }
+
+    @Override
+    public List<Document> getAll() {
+        return null;
     }
 }

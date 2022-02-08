@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class BreedDAOImpl implements BreedDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -92,5 +93,10 @@ public class BreedDAOImpl implements BreedDAO {
     @Override
     public void update(Breed entity) throws DAOException {
 
+    }
+
+    @Override
+    public List<Breed> getAll() {
+        return null;
     }
 }

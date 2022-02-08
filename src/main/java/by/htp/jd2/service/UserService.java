@@ -9,4 +9,5 @@ public interface UserService {
     User signIn(String email, String password) throws ServiceException;
     boolean signUp(User user);
     List<User> getAll();
+    void changeActivity(int idUser);
 }

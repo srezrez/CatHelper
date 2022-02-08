@@ -4,6 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import by.htp.jd2.dao.DAOException;
 import by.htp.jd2.dao.DAOFactory;
 import by.htp.jd2.dao.UserDAO;
+import by.htp.jd2.entity.Activity;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
@@ -47,5 +48,18 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void changeActivity(int idUser) {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            User user = userDAO.get(idUser);
+            user.setActivity(user.getActivity().equals(Activity.ACTIVE) ? Activity.BLOCKED : Activity.ACTIVE);
+            userDAO.updateActivity(user);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -22,6 +22,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where idUser = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_ALL_USER = "select * from user";
+    private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET activity = ? where idUser = ?";
 
     @Override
     public void add(User user) throws DAOException {
@@ -189,5 +190,27 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         return user;
+    }
+
+    @Override
+    public void updateActivity(User user) throws DAOException {
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_UPDATE_USER_ACTIVITY);
+            ps.setInt(1, user.getActivity().getIdPk());
+            ps.setInt(2, user.getIdPk());
+            ps.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException throwables) {
+            throw new DAOException(throwables);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }

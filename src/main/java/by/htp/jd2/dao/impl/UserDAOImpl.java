@@ -10,6 +10,8 @@ import by.htp.jd2.entity.Role;
 import by.htp.jd2.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -19,6 +21,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_DELETE_USER = "delete from user where id_user = ?";
     private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where idUser = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
+    private static final String SQL_SELECT_ALL_USER = "select * from user";
 
     @Override
     public void add(User user) throws DAOException {
@@ -135,6 +138,31 @@ public class UserDAOImpl implements UserDAO {
             }
         }
 
+    }
+
+    @Override
+    public List<User> getAll() throws DAOException {
+        List<User> users = new ArrayList<User>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_USER);
+            while(rs.next()) {
+                users.add(createUser(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return users;
     }
 
     @Override

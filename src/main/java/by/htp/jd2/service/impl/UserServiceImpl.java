@@ -8,6 +8,8 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
     @Override
     public User signIn(String email, String password) throws ServiceException {
@@ -33,5 +35,17 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public List<User> getAll() {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.getAll();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

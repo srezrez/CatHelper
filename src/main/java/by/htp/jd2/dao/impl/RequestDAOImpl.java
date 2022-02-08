@@ -6,10 +6,8 @@ import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.dao.connectionpool.ConnectionPoolException;
 import by.htp.jd2.entity.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDAOImpl implements RequestDAO {
@@ -20,6 +18,7 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_SELECT_REQUEST = "select * from request where id_request = ?";
     private static final String SQL_DELETE_REQUEST = "delete from request where id_request = ?";
     private static final String SQL_UPDATE_REQUEST = "UPDATE request SET date_issue = ?, id_status = ? where id_request = ?";
+    private static final String SQL_SELECT_ALL_REQUEST = "select * from request";
 
     @Override
     public void add(Request request) throws DAOException {
@@ -138,7 +137,27 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     @Override
-    public List<Request> getAll() {
-        return null;
+    public List<Request> getAll() throws DAOException {
+        List<Request> requests = new ArrayList<Request>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_REQUEST);
+            while(rs.next()) {
+                requests.add(createRequest(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return requests;
     }
 }

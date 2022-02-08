@@ -9,10 +9,8 @@ import by.htp.jd2.entity.Cat;
 import by.htp.jd2.entity.Gender;
 import by.htp.jd2.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CatDAOImpl implements CatDAO {
@@ -22,7 +20,7 @@ public class CatDAOImpl implements CatDAO {
     private static final String SQL_INSERT_CAT = "INSERT INTO user(name, birth_date, id_user_owner, id_breed, id_gender) values ( ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_CAT = "select * from cat where id_cat = ?";
     private static final String SQL_DELETE_CAT = "delete from cat where id_cat = ?";
-    //private static final String SQL_UPDATE_CAT = "UPDATE cat SET password = ? where idUser = ?";
+    private static final String SQL_SELECT_ALL_CAT = "select * from cat";
 
     @Override
     public void add(Cat cat) throws DAOException {
@@ -121,7 +119,29 @@ public class CatDAOImpl implements CatDAO {
     }
 
     @Override
-    public List<Cat> getAll() {
-        return null;
+    public List<Cat> getAll() throws DAOException {
+        List<Cat> cats = new ArrayList<Cat>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_CAT);
+            while(rs.next()) {
+                cats.add(createCat(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return cats;
     }
 }

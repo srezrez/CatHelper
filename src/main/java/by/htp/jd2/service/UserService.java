@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
 
     User signIn(String email, String password) throws ServiceException;
-    boolean signUp(User user);
-    List<User> getAll();
-    void changeActivity(int idUser);
+    boolean signUp(User user) throws ServiceException;
+    List<User> getAll() throws ServiceException;
+    void changeActivity(int idUser) throws ServiceException;
 }

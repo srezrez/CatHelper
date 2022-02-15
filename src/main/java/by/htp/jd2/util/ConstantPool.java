@@ -12,6 +12,8 @@ public class ConstantPool {
 	public static final String GO_TO_INFO_PAGE_COMMAND = "GO_TO_INFO_PAGE";
 	public static final String GO_TO_MAIN_PAGE_COMMAND = "GO_TO_MAIN_PAGE";
 	public static final String GO_TO_ERROR_PAGE_COMMAND = "GO_TO_ERROR_PAGE";
+	public static final String GO_TO_ADDED_PAGE_COMMAND = "GO_TO_ADDED_PAGE";
+	public static final String GO_TO_REQUESTS_PAGE_COMMAND = "GO_TO_REQUESTS_PAGE";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -20,6 +22,8 @@ public class ConstantPool {
 	public static final String INFO_JSP_PATH = "/WEB-INF/jsp/info.jsp";
 	public static final String SIGN_IN_JSP_PATH = "/WEB-INF/jsp/sign-in.jsp";
 	public static final String SIGN_UP_JSP_PATH = "/WEB-INF/jsp/sign-up.jsp";
+	public static final String ADDED_JSP_PATH = "/WEB-INF/jsp/added-cat.jsp";
+	public static final String REQUESTS_JSP_PATH = "/WEB-INF/jsp/requests.jsp";
 	
 	//parameter
 	public static final String NAME_PARAMETER = "name";
@@ -41,10 +45,11 @@ public class ConstantPool {
 	public static final String SIGN_IN_PAGE_REDIRECT = "MyController?command=GO_TO_SIGN_IN_PAGE";
 	
 	//message
-	public static final String SIGN_IN_FAIL_MESSAGE = "Something went wrong. Logination failed";
+	public static final String SIGN_IN_FAIL_MESSAGE = "Incorrect email or password. Please try again";
 	public static final String SIGN_UP_FAIL_MESSAGE = "Something went wrong. Registration failed";
 	public static final String SIGN_UP_USER_EXISTS_MESSAGE = "User with this email already exists";
 	public static final String SIGN_UP_SUCCESS_MESSAGE = "You've created new account!";
+	public static final String VALIDATION_ERROR_MS = "Fill the form again with correct values.";
 
 	//db parameters
 	public static final String DB_DRIVER = "db.driver";
@@ -52,4 +57,12 @@ public class ConstantPool {
 	public static final String DB_USER = "db.user";
 	public static final String DB_PASSWORD = "db.password";
 	public static final String DB_POOL_SIZE = "db.poolsize";
+
+	//validation
+	public static final int EMAIL_MIN = 7;
+	public static final int EMAIL_MAX = 51;
+	public static final int PASSWORD_MIN = 9;
+	public static final int PASSWORD_MAX = 26;
+	public static final int NAME_MIN = 1;
+	public static final int NAME_MAX = 26;
 }

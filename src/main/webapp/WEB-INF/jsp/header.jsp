@@ -13,7 +13,7 @@
 <body>
 
 <div class="header">
-    <a href="#default" class="logo">CompanyLogo</a>
+    <a href="#default" class="logo">Cat Helper</a>
     <div class="header-right">
         <a class="active" href="#home">Name Surname</a>
         <a href="#contact">Contact</a>
@@ -21,6 +21,11 @@
         <a href="#about">Log out</a>
     </div>
 </div>
+<ul>
+    <li><a class="active" href="MyController?command=GO_TO_MAIN_PAGE">ALL cats</a></li>
+    <li><a href="MyController?command=GO_TO_ADDED_PAGE">Added cats</a></li>
+    <li><a href="MyController?command=GO_TO_REQUESTS_PAGE">My requests</a></li>
+</ul>
 
 </body>
 </html>

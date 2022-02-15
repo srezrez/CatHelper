@@ -8,17 +8,22 @@ import by.htp.jd2.entity.Activity;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
+import by.htp.jd2.service.UserValidation;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
+
+    private static final UserValidation userValidation = new UserValidation();
+    private static final DAOFactory factory = DAOFactory.getInstance();
+    private static final UserDAO userDAO = factory.getUserDAO();
+
     @Override
     public User signIn(String email, String password) throws ServiceException {
-
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
+        if(!userValidation.signInValidation(email, password))
+            throw new ServiceException("User Validation Exception");
         User user = userDAO.getByEmail(email);
-        if(user == null && !(BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified) {
+        if(user == null || !((BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified)) {
             return null;
         }
         return user;
@@ -26,8 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean signUp(User user) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
+        if(!userValidation.signUpValidation(user))
+            throw new ServiceException("User Validation Exception");
         try {
             if(userDAO.getByEmail(user.getEmail()) != null)
                 return false;
@@ -40,8 +45,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
         try {
             return userDAO.getAll();
         } catch (DAOException e) {
@@ -51,8 +54,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeActivity(int idUser) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
         try {
             User user = userDAO.get(idUser);
             user.setActivity(user.getActivity().equals(Activity.ACTIVE) ? Activity.BLOCKED : Activity.ACTIVE);

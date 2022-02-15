@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,13 +20,15 @@
 			<th width="25%">Breed</th>
 			<th width="30%"></th>
 		</tr>
+		<c:forEach items="${catList}" var="cat">
 		<tr>
-			<td>Hi, I'm your first cell.</td>
-			<td>I'm your second cell.</td>
-			<td>I'm your third cell.</td>
-			<td>I'm your fourth cell.</td>
+			<td><img src='${cat.photoPath}' style="width:70px;height:90px;"/> </td>
+			<td>${cat.name}</td>
+			<td>${cat.age}</td>
+			<td>${cat.breed}</td>
 			<td><button class="table-btn"> More... </button></td>
 		</tr>
+		</c:forEach>
 		<tr>
 			<td>Hi, I'm your first cell.</td>
 			<td>I'm your second cell.</td>

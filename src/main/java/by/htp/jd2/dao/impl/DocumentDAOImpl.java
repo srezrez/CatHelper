@@ -18,8 +18,8 @@ public class DocumentDAOImpl implements DocumentDAO {
     private static final String SQL_INSERT_DOCUMENT = "INSERT INTO document(id_document, path, description, id_cat, id_document_type) values ( ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_DOCUMENT = "select * from document where id_document = ?";
     private static final String SQL_DELETE_DOCUMENT = "delete from document where id_document = ?";
-    //private static final String SQL_UPDATE_DOCUMENT = "UPDATE document SET password = ? where idUser = ?";
     private static final String SQL_SELECT_ALL_DOCUMENT = "select * from document";
+    private static final String SQL_SELECT_ALL_FREE_CAT_PHOTO = "SELECT * FROM cathelper.document where cathelper.document.id_cat not in (select cathelper.request.id_cat from cathelper.request where cathelper.request.id_status = 2) and cathelper.document.id_document_type = 1";
 
 
     @Override
@@ -124,6 +124,31 @@ public class DocumentDAOImpl implements DocumentDAO {
             con = connectionPool.takeConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(SQL_SELECT_ALL_DOCUMENT);
+            while(rs.next()) {
+                documents.add(createDocument(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return documents;
+    }
+
+    @Override
+    public List<Document> getAllFreeCatPhoto() throws DAOException {
+        List<Document> documents = new ArrayList<Document>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT_PHOTO);
             while(rs.next()) {
                 documents.add(createDocument(rs));
             }

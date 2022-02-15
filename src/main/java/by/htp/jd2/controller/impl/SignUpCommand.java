@@ -5,6 +5,7 @@ import by.htp.jd2.controller.Command;
 import by.htp.jd2.entity.Activity;
 import by.htp.jd2.entity.Role;
 import by.htp.jd2.entity.User;
+import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceFactory;
 import by.htp.jd2.service.UserService;
 
@@ -38,14 +39,17 @@ public class SignUpCommand implements Command {
 					new SimpleDateFormat("yyyy-mm-dd").parse(request.getParameter(BIRTH_DATE_PARAMETER)),
 					request.getParameter(EMAIL_PARAMETER), BCrypt.withDefaults().
 					hashToString(12, request.getParameter(PASSWORD_PARAMETER).toCharArray()), Role.USER, Activity.ACTIVE);
+			boolean result = userService.signUp(user);
+			if(result) {
+				response.sendRedirect(INFO_PAGE_REDIRECT + "&" + INFO_MS_PARAMETER + "=" + SIGN_UP_SUCCESS_MESSAGE);
+			} else {
+				response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_UP_USER_EXISTS_MESSAGE);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		boolean result = userService.signUp(user);
-		if(result) {
-			response.sendRedirect(INFO_PAGE_REDIRECT + "&" + INFO_MS_PARAMETER + "=" + SIGN_UP_SUCCESS_MESSAGE);
-		} else {
-			response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_UP_USER_EXISTS_MESSAGE);
+		 catch (ServiceException e) {
+			e.printStackTrace();
 		}
 		
 	}

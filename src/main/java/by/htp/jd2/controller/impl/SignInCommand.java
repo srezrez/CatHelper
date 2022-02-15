@@ -2,6 +2,7 @@ package by.htp.jd2.controller.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import by.htp.jd2.controller.Command;
+import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceFactory;
 import by.htp.jd2.service.UserService;
@@ -27,11 +28,16 @@ public class SignInCommand implements Command {
 		String email = request.getParameter(EMAIL_PARAMETER);
 		String password = request.getParameter(PASSWORD_PARAMETER);
 		try {
-			userService.signIn(email, password);
+			User user = userService.signIn(email, password);
+			if(user == null) {
+				response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_IN_FAIL_MESSAGE);
+			} else {
+				response.sendRedirect(MAIN_PAGE_REDIRECT);
+			}
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + VALIDATION_ERROR_MS);
 		}
-		response.sendRedirect(MAIN_PAGE_REDIRECT);
+
 		
 	}
 

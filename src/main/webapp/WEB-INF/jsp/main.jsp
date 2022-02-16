@@ -29,13 +29,6 @@
 			<td><button class="table-btn"> More... </button></td>
 		</tr>
 		</c:forEach>
-		<tr>
-			<td>Hi, I'm your first cell.</td>
-			<td>I'm your second cell.</td>
-			<td>I'm your third cell.</td>
-			<td>I'm your fourth cell.</td>
-			<td><button class="table-btn"> More... </button></td>
-		</tr>
 	</table>
 </div>
 </body>

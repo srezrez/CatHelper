@@ -23,7 +23,7 @@
 </div>
 <ul>
     <li><a class="active" href="MyController?command=GO_TO_MAIN_PAGE">ALL cats</a></li>
-    <li><a href="MyController?command=GO_TO_ADDED_PAGE">Added cats</a></li>
+    <li><a href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE">Added cats</a></li>
     <li><a href="MyController?command=GO_TO_REQUESTS_PAGE">My requests</a></li>
 </ul>
 

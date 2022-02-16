@@ -22,7 +22,7 @@ public class SignInCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
+		HttpSession session = request.getSession(true);
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserService userService = factory.getUserService();
 		String email = request.getParameter(EMAIL_PARAMETER);
@@ -32,6 +32,7 @@ public class SignInCommand implements Command {
 			if(user == null) {
 				response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_IN_FAIL_MESSAGE);
 			} else {
+				session.setAttribute("idUser", user.getIdPk());
 				response.sendRedirect(MAIN_PAGE_REDIRECT);
 			}
 		} catch (ServiceException e) {

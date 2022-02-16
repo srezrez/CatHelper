@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CatDAO extends BaseDAO<Cat>{
     public List<Cat> getAllFreeCats() throws DAOException;
+    public List<Cat> getAllAddedActiveCats(int idUser) throws DAOException;
 }

@@ -8,6 +8,7 @@ public class CatListViewModel extends AbstractEntity{
     private int age;
     private String breed;
     private String photoPath;
+    private int requestAmount;
 
     public CatListViewModel() {
     }
@@ -46,6 +47,14 @@ public class CatListViewModel extends AbstractEntity{
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public int getRequestAmount() {
+        return requestAmount;
+    }
+
+    public void setRequestAmount(int requestAmount) {
+        this.requestAmount = requestAmount;
     }
 
     @Override

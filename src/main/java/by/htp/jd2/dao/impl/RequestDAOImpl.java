@@ -19,6 +19,7 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_DELETE_REQUEST = "delete from request where id_request = ?";
     private static final String SQL_UPDATE_REQUEST = "UPDATE request SET date_issue = ?, id_status = ? where id_request = ?";
     private static final String SQL_SELECT_ALL_REQUEST = "select * from request";
+    private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ?";
 
     @Override
     public void add(Request request) throws DAOException {
@@ -159,5 +160,31 @@ public class RequestDAOImpl implements RequestDAO {
             }
         }
         return requests;
+    }
+
+    @Override
+    public int getRequestAmountByCatId(int idCat) throws DAOException {
+        int amount = 0;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUEST_AMOUNT_BY_CAT);
+            ps.setInt(1, idCat);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                amount = rs.getInt("count(*)");
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return amount;
     }
 }

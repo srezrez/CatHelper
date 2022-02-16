@@ -21,7 +21,7 @@ public class DAOFactory {
         return catDAO;
     }
 
-    public RequestDAO getRequestDAODAO() {
+    public RequestDAO getRequestDAO() {
         return requestDAODAO;
     }
 

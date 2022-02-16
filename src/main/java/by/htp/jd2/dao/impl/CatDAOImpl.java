@@ -21,9 +21,8 @@ public class CatDAOImpl implements CatDAO {
     private static final String SQL_SELECT_CAT = "select * from cat where id_cat = ?";
     private static final String SQL_DELETE_CAT = "delete from cat where id_cat = ?";
     private static final String SQL_SELECT_ALL_CAT = "select * from cat";
-    private static final String SQL_SELECT_ALL_FREE_CAT = "SELECT * FROM cathelper.cat where cathelper.cat.id_cat not in (\n" +
-            "select cathelper.request.id_cat from cathelper.request\n" +
-            "where cathelper.request.id_status = 2)";
+    private static final String SQL_SELECT_ALL_FREE_CAT = "SELECT * FROM cathelper.cat where cathelper.cat.id_cat not in (select cathelper.request.id_cat from cathelper.request where cathelper.request.id_status = 2)";
+    private static final String SQL_SELECT_ALL_ADDED_ACTIVE_CAT = "SELECT * FROM cathelper.cat where cathelper.cat.id_cat not in (select cathelper.request.id_cat from cathelper.request where cathelper.request.id_status = 2) and cathelper.cat.id_user_owner = ?";
 
     @Override
     public void add(Cat cat) throws DAOException {
@@ -156,6 +155,35 @@ public class CatDAOImpl implements CatDAO {
             con = connectionPool.takeConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT);
+            while(rs.next()) {
+                cats.add(createCat(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return cats;
+    }
+
+    @Override
+    public List<Cat> getAllAddedActiveCats(int idUser) throws DAOException {
+        List<Cat> cats = new ArrayList<Cat>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL_ADDED_ACTIVE_CAT);
+            ps.setInt(1, idUser);
+            ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 cats.add(createCat(rs));
             }

@@ -21,6 +21,7 @@ public final class CommandProvider {
 		commands.put(GO_TO_ERROR_PAGE_COMMAND, new GoToErrorPageCommand());
 		commands.put(GO_TO_ADDED_PAGE_COMMAND, new GoToAddedPageCommand());
 		commands.put(GO_TO_REQUESTS_PAGE_COMMAND, new GoToRequestsPageCommand());
+		commands.put(GO_TO_ADDED_CAT_LIST_PAGE_COMMAND, new GoToAddedCatListPageCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

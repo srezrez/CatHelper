@@ -14,6 +14,7 @@ public class ConstantPool {
 	public static final String GO_TO_ERROR_PAGE_COMMAND = "GO_TO_ERROR_PAGE";
 	public static final String GO_TO_ADDED_PAGE_COMMAND = "GO_TO_ADDED_PAGE";
 	public static final String GO_TO_REQUESTS_PAGE_COMMAND = "GO_TO_REQUESTS_PAGE";
+	public static final String GO_TO_ADDED_CAT_LIST_PAGE_COMMAND = "GO_TO_ADDED_CAT_LIST_PAGE";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -24,6 +25,7 @@ public class ConstantPool {
 	public static final String SIGN_UP_JSP_PATH = "/WEB-INF/jsp/sign-up.jsp";
 	public static final String ADDED_JSP_PATH = "/WEB-INF/jsp/added-cat.jsp";
 	public static final String REQUESTS_JSP_PATH = "/WEB-INF/jsp/requests.jsp";
+	public static final String ADDED_CAT_LIST_JSP_PATH = "/WEB-INF/jsp/added-cat-list.jsp";
 	
 	//parameter
 	public static final String NAME_PARAMETER = "name";

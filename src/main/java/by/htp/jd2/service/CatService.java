@@ -8,4 +8,5 @@ import java.util.List;
 public interface CatService {
     void addCat(Cat cat);
     List<CatListViewModel> getAllFreeCats() throws ServiceException;
+    List<CatListViewModel> getAddedCats(int idUser) throws ServiceException;
 }

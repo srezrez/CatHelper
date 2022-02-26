@@ -7,6 +7,8 @@ import by.htp.jd2.dao.connectionpool.ConnectionPoolException;
 import by.htp.jd2.entity.*;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +29,9 @@ public class RequestDAOImpl implements RequestDAO {
         int idRequest = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_REQUEST);
-
-            ps.setDate(1, new java.sql.Date(request.getDateRequest().getTime()));
-            ps.setDate(2, new java.sql.Date(request.getDateIssue().getTime()));
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT_REQUEST, Statement.RETURN_GENERATED_KEYS);
+            ps.setTimestamp(1, new Timestamp(request.getDateRequest().getTime()));
+            ps.setDate(2, null);
             ps.setInt(3, request.getRequester().getIdPk());
             ps.setInt(4, request.getCat().getIdPk());
             ps.setInt(5, request.getStatus().getIdPk());

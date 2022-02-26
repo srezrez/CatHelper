@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
         int idUser = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_USER);
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());

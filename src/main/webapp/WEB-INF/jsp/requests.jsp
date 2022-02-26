@@ -11,40 +11,32 @@
     <title>Title</title>
 </head>
 <body>
-<form id = "cat-add-form">
-    <h1>Добавить котика</h1>
-    <label class="label-for-form">Имя:</label>
-    <input id="name" type="text" minlength="2" maxlength="25" placeholder="Имя"/>
-    <span class="error" aria-live="polite"></span>
-    <label class="label-for-form">Дата рождения:</label>
-    <input id="birth-date" type="date" name="birth-date" min="2018-01-01" max="2018-12-31" value="2018-07-22">
-    <label class="label-for-form">Порода:</label>
-    <select name="breed" class="breed-class">
-        <option value="value1">Порода 1</option>
-        <option value="value2" selected>Порода 2</option>
-        <option value="value3">Порода 3</option>
-    </select>
-
-    <label class="label-for-form">Пол:</label>
-    <div class="gender-class">
-        <input  type="radio" id="contactChoice1"
-                name="contact" value="email">
-        <label for="contactChoice1">мужской</label>
-
-        <input type="radio" id="contactChoice2"
-               name="contact" value="phone">
-        <label for="contactChoice2">женский</label>
-
-    </div>
-    <label class="label-for-form">Описание:</label>
-    <textarea name="story" rows="5" cols="70" placeholder="Описание"></textarea>
-
-    <label class="label-for-form">Фото:</label>
-    <input name="myFile" type="file">
-
-    <div id="buttons">
-        <input type="submit" value="Добавить"/>
-    </div>
-</form>
+<jsp:include page="header.jsp" />
+<div id="body-div">
+    <form action="MyController" method="get">
+        <input type="hidden" name="command" value="GO_TO_ADD_CAT_PAGE">
+        <input type="submit" value="Добавить кота">
+    </form>
+    <table class ="table">
+        <tr>
+            <th width="25%">Имя</th>
+            <th width="20%">Возраст</th>
+            <th width="25%">Порода</th>
+            <th width="25%">Количество заявок</th>
+            <th width="25%">Статус</th>
+            <th width="30%"></th>
+        </tr>
+        <c:forEach items="${addedCatList}" var="cat">
+            <tr>
+                <td>${cat.name}</td>
+                <td>${cat.age}</td>
+                <td>${cat.breed}</td>
+                <td>${cat.requestAmount}</td>
+                <td>${cat.status}</td>
+                <td><button class="table-btn"> Подробнее... </button></td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 </body>
 </html>

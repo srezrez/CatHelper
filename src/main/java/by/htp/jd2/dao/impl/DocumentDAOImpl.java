@@ -15,7 +15,7 @@ public class DocumentDAOImpl implements DocumentDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    private static final String SQL_INSERT_DOCUMENT = "INSERT INTO document(id_document, path, description, id_cat, id_document_type) values ( ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT_DOCUMENT = "INSERT INTO document(path, description, id_cat, id_document_type) values ( ?, ?, ?, ?)";
     private static final String SQL_SELECT_DOCUMENT = "select * from document where id_document = ?";
     private static final String SQL_DELETE_DOCUMENT = "delete from document where id_document = ?";
     private static final String SQL_SELECT_ALL_DOCUMENT = "select * from document";
@@ -23,18 +23,23 @@ public class DocumentDAOImpl implements DocumentDAO {
 
 
     @Override
-    public void add(Document document) throws DAOException {
+    public int add(Document document) throws DAOException {
 
         Connection con = null;
+        int docId = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_DOCUMENT);
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT_DOCUMENT, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, document.getPath());
             ps.setString(2, document.getDescription());
             ps.setInt(3, document.getCat().getIdPk());
             ps.setInt(4, document.getDocumentType().getIdPk());
             ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                docId = generatedKeys.getInt(1);
+            }
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -46,7 +51,7 @@ public class DocumentDAOImpl implements DocumentDAO {
                 e.printStackTrace();
             }
         }
-
+        return docId;
     }
 
     @Override

@@ -11,7 +11,6 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-	<input type="button" value="???????? ??????"/>
 	<table class ="table">
 		<tr>
 			<th width="40%">Photo</th>

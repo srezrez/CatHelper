@@ -6,7 +6,7 @@ import by.htp.jd2.entity.CatListViewModel;
 import java.util.List;
 
 public interface CatService {
-    void addCat(Cat cat);
     List<CatListViewModel> getAllFreeCats() throws ServiceException;
     List<CatListViewModel> getAddedCats(int idUser) throws ServiceException;
+    void addCat(Cat cat, String fileName) throws ServiceException;
 }

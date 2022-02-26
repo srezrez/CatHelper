@@ -6,41 +6,44 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta charset="utf-8">
+    <link href="resources/css/style.css" type="text/css" rel="stylesheet" />
     <title>Title</title>
 </head>
 <body>
-<form id = "cat-add-form">
+<jsp:include page="header.jsp" />
+<form id = "cat-add-form" action="MyController" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="command" value="add-cat">
     <h1>Добавить котика</h1>
     <label class="label-for-form">Имя:</label>
-    <input id="name" type="text" minlength="2" maxlength="25" placeholder="Имя"/>
+    <input name="name" id="name" type="text" minlength="2" maxlength="25" placeholder="Имя"/>
     <span class="error" aria-live="polite"></span>
     <label class="label-for-form">Дата рождения:</label>
     <input id="birth-date" type="date" name="birth-date" min="2018-01-01" max="2018-12-31" value="2018-07-22">
     <label class="label-for-form">Порода:</label>
     <select name="breed" class="breed-class">
-        <option value="value1">Порода 1</option>
-        <option value="value2" selected>Порода 2</option>
-        <option value="value3">Порода 3</option>
+        <c:forEach items="${breedList}" var="breed">
+            <option value=${breed.idPk}>${breed.title}</option>
+        </c:forEach>
     </select>
 
     <label class="label-for-form">Пол:</label>
     <div class="gender-class">
-        <input  type="radio" id="contactChoice1"
-                name="contact" value="email">
+        <input  type="radio" id="contactChoice1" name="gender" value="1" checked>
         <label for="contactChoice1">мужской</label>
 
-        <input type="radio" id="contactChoice2"
-               name="contact" value="phone">
+        <input type="radio" id="contactChoice2" name="gender" value="2">
         <label for="contactChoice2">женский</label>
 
     </div>
     <label class="label-for-form">Описание:</label>
-    <textarea name="story" rows="5" cols="70" placeholder="Описание"></textarea>
+    <textarea name="description" rows="5" cols="70" placeholder="Описание"></textarea>
 
     <label class="label-for-form">Фото:</label>
-    <input name="myFile" type="file">
+    <input name="catPhoto" type="file">
 
     <div id="buttons">
         <input type="submit" value="Добавить"/>

@@ -16,7 +16,10 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-    <input type="button" value="Добавить кота"/>
+    <form action="MyController" method="get">
+        <input type="hidden" name="command" value="GO_TO_ADD_CAT_PAGE">
+        <input type="submit" value="Добавить кота">
+    </form>
     <table class ="table">
         <tr>
             <th width="25%">Имя</th>

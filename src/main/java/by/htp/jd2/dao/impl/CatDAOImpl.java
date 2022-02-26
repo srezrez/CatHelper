@@ -17,7 +17,7 @@ public class CatDAOImpl implements CatDAO {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    private static final String SQL_INSERT_CAT = "INSERT INTO user(name, birth_date, id_user_owner, id_breed, id_gender) values ( ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT_CAT = "INSERT INTO cat(name, birth_date, id_user_owner, id_breed, id_gender, description) values ( ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_CAT = "select * from cat where id_cat = ?";
     private static final String SQL_DELETE_CAT = "delete from cat where id_cat = ?";
     private static final String SQL_SELECT_ALL_CAT = "select * from cat";
@@ -25,20 +25,26 @@ public class CatDAOImpl implements CatDAO {
     private static final String SQL_SELECT_ALL_ADDED_ACTIVE_CAT = "SELECT * FROM cathelper.cat where cathelper.cat.id_cat not in (select cathelper.request.id_cat from cathelper.request where cathelper.request.id_status = 2) and cathelper.cat.id_user_owner = ?";
 
     @Override
-    public void add(Cat cat) throws DAOException {
+    public int add(Cat cat) throws DAOException {
 
         Connection con = null;
+        int idCat = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_CAT);
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT_CAT, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, cat.getName());
             ps.setDate(2, new java.sql.Date(cat.getBirthDate().getTime()));
             ps.setInt(3, cat.getOwner().getIdPk());
             ps.setInt(4, cat.getBreed().getIdPk());
             ps.setInt(5, cat.getGender().getIdPk());
+            ps.setString(6, cat.getDescription());
 
             ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                idCat = generatedKeys.getInt(1);
+            }
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -50,6 +56,7 @@ public class CatDAOImpl implements CatDAO {
                 e.printStackTrace();
             }
         }
+        return idCat;
     }
 
     @Override
@@ -109,6 +116,7 @@ public class CatDAOImpl implements CatDAO {
             cat.setBreed(new Breed(rs.getInt("id_breed")));
             cat.setOwner(new User(rs.getInt("id_user_owner")));
             cat.setGender(Gender.getById(rs.getInt("id_gender")));
+            cat.setDescription(rs.getString("description"));
         } catch (SQLException e) {
             throw new DAOException(e);
         }

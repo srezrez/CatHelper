@@ -12,9 +12,10 @@ public class ConstantPool {
 	public static final String GO_TO_INFO_PAGE_COMMAND = "GO_TO_INFO_PAGE";
 	public static final String GO_TO_MAIN_PAGE_COMMAND = "GO_TO_MAIN_PAGE";
 	public static final String GO_TO_ERROR_PAGE_COMMAND = "GO_TO_ERROR_PAGE";
-	public static final String GO_TO_ADDED_PAGE_COMMAND = "GO_TO_ADDED_PAGE";
 	public static final String GO_TO_REQUESTS_PAGE_COMMAND = "GO_TO_REQUESTS_PAGE";
 	public static final String GO_TO_ADDED_CAT_LIST_PAGE_COMMAND = "GO_TO_ADDED_CAT_LIST_PAGE";
+	public static final String GO_TO_ADD_CAT_PAGE_COMMAND = "GO_TO_ADD_CAT_PAGE";
+	public static final String ADD_CAT_COMMAND = "add-cat";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -23,7 +24,7 @@ public class ConstantPool {
 	public static final String INFO_JSP_PATH = "/WEB-INF/jsp/info.jsp";
 	public static final String SIGN_IN_JSP_PATH = "/WEB-INF/jsp/sign-in.jsp";
 	public static final String SIGN_UP_JSP_PATH = "/WEB-INF/jsp/sign-up.jsp";
-	public static final String ADDED_JSP_PATH = "/WEB-INF/jsp/added-cat.jsp";
+	public static final String ADD_CAT_JSP = "/WEB-INF/jsp/add-cat.jsp";
 	public static final String REQUESTS_JSP_PATH = "/WEB-INF/jsp/requests.jsp";
 	public static final String ADDED_CAT_LIST_JSP_PATH = "/WEB-INF/jsp/added-cat-list.jsp";
 	
@@ -67,4 +68,8 @@ public class ConstantPool {
 	public static final int PASSWORD_MAX = 26;
 	public static final int NAME_MIN = 1;
 	public static final int NAME_MAX = 26;
+
+	//file path
+	public static final String PHOTO_SAVE_PATH = "D:\\Projects\\IdeaProjects\\CatHelper\\catHelper\\src\\main\\webapp\\resources\\img\\";
+	public static final String PHOTO_PATH_DB = "resources/img/";
 }

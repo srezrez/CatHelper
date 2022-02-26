@@ -4,6 +4,7 @@ import by.htp.jd2.dao.*;
 import by.htp.jd2.entity.Cat;
 import by.htp.jd2.entity.CatListViewModel;
 import by.htp.jd2.entity.Document;
+import by.htp.jd2.entity.DocumentType;
 import by.htp.jd2.service.CatService;
 import by.htp.jd2.service.ServiceException;
 
@@ -13,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.htp.jd2.util.ConstantPool.*;
+
 public class CatServiceImpl implements CatService {
 
     private static final DAOFactory factory = DAOFactory.getInstance();
@@ -20,15 +23,6 @@ public class CatServiceImpl implements CatService {
     private static final DocumentDAO documentDAO = factory.getDocumentDAO();
     private static final BreedDAO breedDao = factory.getBreedDAO();
     private static final RequestDAO requestDao = factory.getRequestDAO();
-
-    @Override
-    public void addCat(Cat cat) {
-        try {
-            catDAO.add(cat);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public List<CatListViewModel> getAllFreeCats() throws ServiceException {
@@ -63,6 +57,17 @@ public class CatServiceImpl implements CatService {
             throw new ServiceException("Exception in getAddedCats");
         }
         return catList;
+    }
+
+    @Override
+    public void addCat(Cat cat, String fileName) throws ServiceException {
+        try {
+            int idCat = catDAO.add(cat);
+            Document doc = new Document(PHOTO_PATH_DB + fileName, "Описание", new Cat(idCat), DocumentType.PHOTO);
+            documentDAO.add(doc);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in addCat");
+        }
     }
 
     private List<CatListViewModel> createCatListfromDoc(List<Document> docs) {

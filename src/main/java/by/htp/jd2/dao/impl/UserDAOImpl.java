@@ -25,9 +25,10 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET activity = ? where idUser = ?";
 
     @Override
-    public void add(User user) throws DAOException {
+    public int add(User user) throws DAOException {
 
         Connection con = null;
+        int idUser = 0;
         try {
             con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT_USER);
@@ -41,6 +42,10 @@ public class UserDAOImpl implements UserDAO {
             ps.setInt(7, user.getRole().getIdPk());
 
             ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                idUser = generatedKeys.getInt(1);
+            }
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -52,6 +57,7 @@ public class UserDAOImpl implements UserDAO {
                 e.printStackTrace();
             }
         }
+        return idUser;
     }
 
     @Override

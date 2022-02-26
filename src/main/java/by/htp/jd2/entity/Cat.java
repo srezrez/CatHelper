@@ -10,6 +10,7 @@ public class Cat extends AbstractEntity{
     private User owner;
     private Breed breed;
     private Gender gender;
+    private String description;
 
     public Cat() {
     }
@@ -18,12 +19,13 @@ public class Cat extends AbstractEntity{
         super(idPk);
     }
 
-    public Cat(String name, Date birthDate, User owner, Breed breed, Gender gender) {
+    public Cat(String name, Date birthDate, User owner, Breed breed, Gender gender, String description) {
         this.name = name;
         this.birthDate = birthDate;
         this.owner = owner;
         this.breed = breed;
         this.gender = gender;
+        this.description = description;
     }
 
     public String getName() {
@@ -64,6 +66,14 @@ public class Cat extends AbstractEntity{
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

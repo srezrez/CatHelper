@@ -22,13 +22,18 @@ public class BreedDAOImpl implements BreedDAO {
 
 
     @Override
-    public void add(Breed breed) throws DAOException {
+    public int add(Breed breed) throws DAOException {
         Connection con = null;
+        int idBreed = 0;
         try {
             con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT_BREED);
-
             ps.setString(1, breed.getTitle());
+            ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                idBreed = generatedKeys.getInt(1);
+            }
 
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
@@ -41,6 +46,7 @@ public class BreedDAOImpl implements BreedDAO {
                 throw new DAOException(e);
             }
         }
+        return idBreed;
     }
 
     @Override

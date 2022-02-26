@@ -22,8 +22,9 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ?";
 
     @Override
-    public void add(Request request) throws DAOException {
+    public int add(Request request) throws DAOException {
         Connection con = null;
+        int idRequest = 0;
         try {
             con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT_REQUEST);
@@ -35,6 +36,10 @@ public class RequestDAOImpl implements RequestDAO {
             ps.setInt(5, request.getStatus().getIdPk());
 
             ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                idRequest = generatedKeys.getInt(1);
+            }
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -46,6 +51,7 @@ public class RequestDAOImpl implements RequestDAO {
                 e.printStackTrace();
             }
         }
+        return idRequest;
     }
 
     @Override

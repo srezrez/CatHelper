@@ -23,6 +23,8 @@ public final class CommandProvider {
 		commands.put(GO_TO_REQUESTS_PAGE_COMMAND, new GoToRequestsPageCommand());
 		commands.put(GO_TO_ADDED_CAT_LIST_PAGE_COMMAND, new GoToAddedCatListPageCommand());
 		commands.put(ADD_CAT_COMMAND, new AddCatCommand());
+		commands.put(GO_TO_CAT_PAGE_COMMAND, new GoToCatPageCommand());
+		commands.put(SEND_REQUEST_COMMAND, new SendRequestCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

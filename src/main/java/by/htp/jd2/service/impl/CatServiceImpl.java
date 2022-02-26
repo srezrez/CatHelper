@@ -70,6 +70,22 @@ public class CatServiceImpl implements CatService {
         }
     }
 
+    @Override
+    public CatListViewModel getCatInfo(int idCat) throws ServiceException {
+        CatListViewModel catInfo = null;
+        try {
+            Document document = documentDAO.getByCatId(idCat);
+            Cat cat = catDAO.get(document.getCat().getIdPk());
+            cat.setBreed(breedDao.get(cat.getBreed().getIdPk()));
+            document.setCat(cat);
+            catInfo = new CatListViewModel(cat.getIdPk(), cat.getName(), calculateAge(cat.getBirthDate()),
+                    cat.getBreed().getTitle(), document.getPath(), cat.getDescription());
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in getCatInfo");
+        }
+        return catInfo;
+    }
+
     private List<CatListViewModel> createCatListfromDoc(List<Document> docs) {
         List<CatListViewModel> catList;
         catList = docs.stream().map(x -> {

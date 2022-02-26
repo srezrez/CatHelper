@@ -20,7 +20,7 @@ public class DocumentDAOImpl implements DocumentDAO {
     private static final String SQL_DELETE_DOCUMENT = "delete from document where id_document = ?";
     private static final String SQL_SELECT_ALL_DOCUMENT = "select * from document";
     private static final String SQL_SELECT_ALL_FREE_CAT_PHOTO = "SELECT * FROM cathelper.document where cathelper.document.id_cat not in (select cathelper.request.id_cat from cathelper.request where cathelper.request.id_status = 2) and cathelper.document.id_document_type = 1";
-
+    private static final String SQL_SELECT_DOCUMENT_BY_CAT_ID = "select * from document where id_cat = ?";
 
     @Override
     public int add(Document document) throws DAOException {
@@ -169,5 +169,31 @@ public class DocumentDAOImpl implements DocumentDAO {
             }
         }
         return documents;
+    }
+
+    @Override
+    public Document getByCatId(int idCat) throws DAOException {
+        Document document = null;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_DOCUMENT_BY_CAT_ID);
+            ps.setInt(1, idCat);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                document = createDocument(rs);
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return document;
     }
 }

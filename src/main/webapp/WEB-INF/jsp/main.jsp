@@ -25,7 +25,11 @@
 			<td>${cat.name}</td>
 			<td>${cat.age}</td>
 			<td>${cat.breed}</td>
-			<td><button class="table-btn"> More... </button></td>
+            <td><form action="MyController" method="get">
+                <input type="hidden" name="command" value="GO_TO_CAT_PAGE">
+                <input type="hidden" name="id-cat" value=${cat.idPk}>
+                <input class="table-btn" type="submit" value="More...">
+            </form></td>
 		</tr>
 		</c:forEach>
 	</table>

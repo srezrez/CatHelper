@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DocumentDAO extends BaseDAO<Document>{
     List<Document> getAllFreeCatPhoto() throws DAOException;
+    Document getByCatId(int idCat) throws DAOException;
 }

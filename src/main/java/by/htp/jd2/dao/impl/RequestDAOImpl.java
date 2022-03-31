@@ -22,6 +22,9 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_UPDATE_REQUEST = "UPDATE request SET date_issue = ?, id_status = ? where id_request = ?";
     private static final String SQL_SELECT_ALL_REQUEST = "select * from request";
     private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ?";
+    private static final String SQL_SELECT_REQUESTS_BY_USER_ID = "SELECT * FROM cathelper.request where id_user_requester = ? and id_status = 1";
+    private static final String SQL_SELECT_REQUEST_QUEUE_AMOUNT = "SELECT count(*) FROM cathelper.request where id_cat = ? and id_status = 1  and date_request <= ?";
+    private static final String SQL_CANCEL_REQUEST = "UPDATE request SET id_status = ? where id_request = ?";
 
     @Override
     public int add(Request request) throws DAOException {
@@ -193,5 +196,80 @@ public class RequestDAOImpl implements RequestDAO {
             }
         }
         return amount;
+    }
+
+    @Override
+    public List<Request> getRequestsByUserId(int idUser) throws DAOException {
+        List<Request> requests = new ArrayList<Request>();
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUESTS_BY_USER_ID);
+            ps.setInt(1, idUser);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                requests.add(createRequest(rs));
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return requests;
+    }
+
+    @Override
+    public int getQueueAmount(int idCat, java.util.Date requestDate) throws DAOException {
+        int amount = 0;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUEST_QUEUE_AMOUNT);
+            ps.setInt(1, idCat);
+            ps.setTimestamp(2, new Timestamp(requestDate.getTime()));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                amount = rs.getInt("count(*)");
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return amount;
+    }
+
+    @Override
+    public void cancelRequest(int idRequest) throws DAOException {
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_CANCEL_REQUEST);
+            ps.setInt(1, Status.REQUEST_CANCELED.getIdPk());
+            ps.setInt(2, idRequest);
+            ps.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException throwables) {
+            throw new DAOException(throwables);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }

@@ -4,7 +4,8 @@ public enum Status {
 
     REQUEST_CREATED (1, "Заявка создана"),
     REQUEST_ACCEPTED (2, "Заявка одобрена"),
-    REQUEST_DENIED (3, "Заявка отклонена");
+    REQUEST_DENIED (3, "Заявка отклонена"),
+    REQUEST_CANCELED (4, "Заявка отменена");
 
     private int idPk;
     private String title;

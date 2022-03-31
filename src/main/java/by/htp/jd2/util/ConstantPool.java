@@ -18,6 +18,7 @@ public class ConstantPool {
 	public static final String ADD_CAT_COMMAND = "add-cat";
 	public static final String GO_TO_CAT_PAGE_COMMAND = "GO_TO_CAT_PAGE";
 	public static final String SEND_REQUEST_COMMAND = "SEND_REQUEST";
+	public static final String CANCEL_REQUEST_COMMAND = "CANCEL_REQUEST";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";

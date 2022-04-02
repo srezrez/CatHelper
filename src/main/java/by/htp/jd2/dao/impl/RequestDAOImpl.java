@@ -25,6 +25,8 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_SELECT_REQUESTS_BY_USER_ID = "SELECT * FROM cathelper.request where id_user_requester = ? and id_status = 1";
     private static final String SQL_SELECT_REQUEST_QUEUE_AMOUNT = "SELECT count(*) FROM cathelper.request where id_cat = ? and id_status = 1  and date_request <= ?";
     private static final String SQL_CANCEL_REQUEST = "UPDATE request SET id_status = ? where id_request = ?";
+    private static final String SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT = "SELECT count(*) FROM cathelper.request where id_status = 1 and id_cat = ?";
+    private static final String SQL_SELECT_FIRST_ACTIVE_REQUEST = "SELECT * FROM cathelper.request where id_status = 1 and id_cat = ? order by date_request LIMIT 1";
 
     @Override
     public int add(Request request) throws DAOException {
@@ -271,5 +273,57 @@ public class RequestDAOImpl implements RequestDAO {
                 throw new DAOException(e);
             }
         }
+    }
+
+    @Override
+    public int getRequestQueueAmount(int idCat) throws DAOException {
+        int amount = 0;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
+            ps.setInt(1, idCat);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                amount = rs.getInt("count(*)");
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return amount;
+    }
+
+    @Override
+    public Request getFirstActiveRequestByCat(int idCat) throws DAOException {
+        Request request = null;
+        Connection con = null;
+        try {
+            con = connectionPool.takeConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_FIRST_ACTIVE_REQUEST);
+            ps.setInt(1, idCat);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                request = createRequest(rs);
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
+        return request;
     }
 }

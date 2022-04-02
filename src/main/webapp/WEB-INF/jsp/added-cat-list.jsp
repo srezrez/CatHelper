@@ -34,7 +34,13 @@
                 <td>${cat.age}</td>
                 <td>${cat.breed}</td>
                 <td>${cat.requestAmount}</td>
-                <td><button class="table-btn"> Подробнее... </button></td>
+                <td>
+                    <form action="MyController" method="get">
+                        <input type="hidden" name="command" value="GO_TO_CAT_REQUEST_PAGE">
+                        <input type="hidden" name="id-cat" value=${cat.idPk}>
+                        <input type="submit" class="table-btn" value="Подробнее...">
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </table>

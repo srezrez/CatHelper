@@ -10,4 +10,5 @@ public interface CatService {
     List<CatListViewModel> getAddedCats(int idUser) throws ServiceException;
     void addCat(Cat cat, String fileName) throws ServiceException;
     CatListViewModel getCatInfo(int idCat) throws ServiceException;
+    Cat getCat (int idCat) throws ServiceException;
 }

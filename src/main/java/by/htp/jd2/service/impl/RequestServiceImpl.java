@@ -1,10 +1,7 @@
 package by.htp.jd2.service.impl;
 
 import by.htp.jd2.dao.*;
-import by.htp.jd2.entity.CatListViewModel;
-import by.htp.jd2.entity.Document;
-import by.htp.jd2.entity.Request;
-import by.htp.jd2.entity.RequestViewModel;
+import by.htp.jd2.entity.*;
 import by.htp.jd2.service.RequestService;
 import by.htp.jd2.service.ServiceException;
 
@@ -17,6 +14,7 @@ public class RequestServiceImpl implements RequestService {
     private static final RequestDAO requestDao = factory.getRequestDAO();
     private static final CatDAO catDao = factory.getCatDAO();
     private static final DocumentDAO documentDao = factory.getDocumentDAO();
+    private static final UserDAO userDao = factory.getUserDAO();
 
     @Override
     public void sendRequest(Request request) throws ServiceException {
@@ -61,5 +59,19 @@ public class RequestServiceImpl implements RequestService {
         } catch (DAOException e) {
             throw new ServiceException("Exception in cancelRequest");
         }
+    }
+
+    @Override
+    public CatRequestViewModel getCatRequestInfo(int idCat) {
+        CatRequestViewModel catRequest = new CatRequestViewModel();
+        try {
+            catRequest.setRequestAmount(requestDao.getRequestAmountByCatId(idCat));
+            Request request = requestDao.getFirstActiveRequestByCat(idCat);
+            catRequest.setRequester(userDao.get(request.getRequester().getIdPk()));
+            catRequest.setIdPk(request.getIdPk());
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return catRequest;
     }
 }

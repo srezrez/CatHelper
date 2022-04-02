@@ -86,6 +86,17 @@ public class CatServiceImpl implements CatService {
         return catInfo;
     }
 
+    @Override
+    public Cat getCat(int idCat) throws ServiceException {
+        Cat cat = null;
+        try {
+            cat = catDAO.get(idCat);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in getCat");
+        }
+        return cat;
+    }
+
     private List<CatListViewModel> createCatListfromDoc(List<Document> docs) {
         List<CatListViewModel> catList;
         catList = docs.stream().map(x -> {

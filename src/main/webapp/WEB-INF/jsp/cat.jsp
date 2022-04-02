@@ -15,16 +15,29 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-    <form action="MyController" method="post">
-        <input type="hidden" name="command" value="SEND_REQUEST">
-        <input type="hidden" name="id-cat" value=${cat.idPk}>
-        <input type="submit" value="Отправить заявку">
-    </form>
-    <img src='${cat.photoPath}' style="width:70px;height:90px;"/>
-    <label>${cat.name}</label>
-    <label>${cat.age}</label>
-    <label>${cat.breed}</label>
-    <label>${cat.description}</label>
+    <div id="cat-div">
+        <section class="container">
+            <div class="one"> <img src='${cat.photoPath}' class='cat-photo'/> </div>
+            <div class="two">
+                <h1>Информация о котике</h1>
+                <div class='cat-info-class'>
+                    <label>Имя:</label>
+                    <label>${cat.name}</label><br/>
+                    <label>Возраст:</label>
+                    <label>${cat.age}</label><br/>
+                    <label>Порода:</label>
+                    <label>${cat.breed}</label><br/>
+                    <label>Описание:</label>
+                    <label>${cat.description}</label><br/>
+                </div>
+                <form action="MyController" method="post">
+                    <input type="hidden" name="command" value="SEND_REQUEST">
+                    <input type="hidden" name="id-cat" value=${cat.idPk}>
+                    <input type="submit" value="Отправить заявку">
+                </form>
+            </div>
+        </section>
+    </div>
 </div>
 </body>
 </html>

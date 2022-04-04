@@ -6,6 +6,7 @@ import by.htp.jd2.service.RequestService;
 import by.htp.jd2.service.ServiceException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,5 +74,30 @@ public class RequestServiceImpl implements RequestService {
             e.printStackTrace();
         }
         return catRequest;
+    }
+
+    @Override
+    public void approveRequest(int idPk) throws ServiceException {
+        try {
+            Request request = requestDao.get(idPk);
+            request.setStatus(Status.REQUEST_ACCEPTED);
+            request.setDateIssue(new Date());
+            requestDao.update(request);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in approveRequest");
+        }
+
+    }
+
+    @Override
+    public void rejectRequest(int idPk) throws ServiceException {
+        try {
+            Request request = requestDao.get(idPk);
+            request.setStatus(Status.REQUEST_DENIED);
+            request.setDateIssue(new Date());
+            requestDao.update(request);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in approveRequest");
+        }
     }
 }

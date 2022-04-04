@@ -23,6 +23,7 @@ public class CatServiceImpl implements CatService {
     private static final DocumentDAO documentDAO = factory.getDocumentDAO();
     private static final BreedDAO breedDao = factory.getBreedDAO();
     private static final RequestDAO requestDao = factory.getRequestDAO();
+    private static final UserDAO userDao = factory.getUserDAO();
 
     @Override
     public List<CatListViewModel> getAllFreeCats() throws ServiceException {

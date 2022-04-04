@@ -21,7 +21,7 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_DELETE_REQUEST = "delete from request where id_request = ?";
     private static final String SQL_UPDATE_REQUEST = "UPDATE request SET date_issue = ?, id_status = ? where id_request = ?";
     private static final String SQL_SELECT_ALL_REQUEST = "select * from request";
-    private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ?";
+    private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ? and id_status = 1";
     private static final String SQL_SELECT_REQUESTS_BY_USER_ID = "SELECT * FROM cathelper.request where id_user_requester = ? and id_status = 1";
     private static final String SQL_SELECT_REQUEST_QUEUE_AMOUNT = "SELECT count(*) FROM cathelper.request where id_cat = ? and id_status = 1  and date_request <= ?";
     private static final String SQL_CANCEL_REQUEST = "UPDATE request SET id_status = ? where id_request = ?";
@@ -115,7 +115,7 @@ public class RequestDAOImpl implements RequestDAO {
             request.setIdPk(rs.getInt("id_request"));
             request.setDateRequest(rs.getDate("date_request"));
             request.setDateIssue(rs.getDate("date_issue"));
-            request.setRequester(new User(rs.getInt("id_request")));
+            request.setRequester(new User(rs.getInt("id_user_requester")));
             request.setCat(new Cat(rs.getInt("id_cat")));
             request.setStatus(Status.getById(rs.getInt("id_status")));
 
@@ -132,7 +132,7 @@ public class RequestDAOImpl implements RequestDAO {
         try {
             con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_UPDATE_REQUEST);
-            ps.setDate(1, new java.sql.Date(request.getDateIssue().getTime()));
+            ps.setTimestamp(1, new Timestamp(request.getDateRequest().getTime()));
             ps.setInt(2, request.getStatus().getIdPk());
             ps.setInt(3, request.getIdPk());
             ps.executeUpdate();
@@ -180,7 +180,7 @@ public class RequestDAOImpl implements RequestDAO {
         Connection con = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUEST_AMOUNT_BY_CAT);
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
             ps.setInt(1, idCat);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){

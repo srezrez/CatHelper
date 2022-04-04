@@ -29,14 +29,14 @@
                 <td>${catRequest.requester.name} ${catRequest.requester.name}</td>
                 <td>${catRequest.requester.email}</td>
                 <td>
-                    <form action="MyController" method="get">
+                    <form action="MyController" method="post">
                         <input type="hidden" name="command" value="APPROVE_REQUEST">
-                        <input type="hidden" name="id-cat" value=${catRequest.idPk}>
+                        <input type="hidden" name="id-request" value=${catRequest.idPk}>
                         <input type="submit" class="table-btn" value="Принять">
                     </form>
-                    <form action="MyController" method="get">
+                    <form action="MyController" method="post">
                         <input type="hidden" name="command" value="REJECT_REQUEST">
-                        <input type="hidden" name="id-cat" value=${catRequest.idPk}>
+                        <input type="hidden" name="id-request" value=${catRequest.idPk}>
                         <input type="submit" class="table-btn" value="Отказать">
                     </form>
                 </td>

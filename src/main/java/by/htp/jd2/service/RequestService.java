@@ -11,4 +11,6 @@ public interface RequestService {
     List<RequestViewModel> getRequests(int idUser) throws ServiceException;
     void cancelRequest(int idRequest) throws ServiceException;
     CatRequestViewModel getCatRequestInfo (int idCat);
+    void approveRequest(int idPk) throws ServiceException;
+    void rejectRequest(int idPk) throws ServiceException;
 }

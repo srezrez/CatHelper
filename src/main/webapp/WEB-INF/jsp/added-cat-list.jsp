@@ -35,11 +35,13 @@
                 <td>${cat.breed}</td>
                 <td>${cat.requestAmount}</td>
                 <td>
-                    <form action="MyController" method="get">
-                        <input type="hidden" name="command" value="GO_TO_CAT_REQUEST_PAGE">
-                        <input type="hidden" name="id-cat" value=${cat.idPk}>
-                        <input type="submit" class="table-btn" value="Подробнее...">
-                    </form>
+                    <c:if test="${cat.requestAmount > 0}">
+                        <form action="MyController" method="get">
+                            <input type="hidden" name="command" value="GO_TO_CAT_REQUEST_PAGE">
+                            <input type="hidden" name="id-cat" value=${cat.idPk}>
+                            <input type="submit" class="table-btn" value="Подробнее...">
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

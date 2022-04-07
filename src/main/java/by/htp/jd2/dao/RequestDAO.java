@@ -9,7 +9,7 @@ import java.util.List;
 public interface RequestDAO extends BaseDAO<Request>{
 
     int getRequestAmountByCatId (int idCat) throws DAOException;
-    List<Request> getRequestsByUserId(int idUser) throws DAOException;
+    List<Request> getRequestsByUserIdAndStatus(int idUser, int idStatus) throws DAOException;
     int getQueueAmount (int idCat, Date requestDate) throws DAOException;
     void cancelRequest (int idRequest) throws DAOException;
     int getRequestQueueAmount (int idCat) throws DAOException;

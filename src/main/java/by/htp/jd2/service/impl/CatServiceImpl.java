@@ -80,7 +80,7 @@ public class CatServiceImpl implements CatService {
             cat.setBreed(breedDao.get(cat.getBreed().getIdPk()));
             document.setCat(cat);
             catInfo = new CatListViewModel(cat.getIdPk(), cat.getName(), calculateAge(cat.getBirthDate()),
-                    cat.getBreed().getTitle(), document.getPath(), cat.getDescription());
+                    cat.getBreed().getTitle(), document.getPath(), cat.getDescription(), cat.getOwner().getIdPk());
         } catch (DAOException e) {
             throw new ServiceException("Exception in getCatInfo");
         }

@@ -11,6 +11,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.htp.jd2.util.ConstantPool.CAT_JSP_PATH;
@@ -21,6 +22,8 @@ public class GoToCatPageCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceFactory factory = ServiceFactory.getInstance();
         CatService catService = factory.getCatService();
+        HttpSession session = request.getSession(true);
+        int id = (int)session.getAttribute("idUser");
         try {
             CatListViewModel catInfo = catService.getCatInfo(Integer.parseInt(request.getParameter(ID_CAT_PARAMETER)));
             request.setAttribute("cat", catInfo);

@@ -12,11 +12,17 @@
     <meta charset="utf-8">
     <link href="resources/css/style.css" type="text/css" rel="stylesheet" />
     <title>Title</title>
+    <script src="resources/js/jquery.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-    <table class ="table">
+    <select id="req-select"> <!--Supplement an id here instead of using 'name'-->
+        <option value="1">Созданные заявки</option>
+        <option value="2" selected>Одобренные заявки</option>
+        <option value="3">Отклоненные заявки</option>
+    </select>
+    <table class ="table" id="req-table">
         <tr>
             <th width="25%">Имя</th>
             <th width="20%">Дата заявки</th>
@@ -45,5 +51,6 @@
         </c:forEach>
     </table>
 </div>
+<script src="resources/js/requests-filter.js"></script>
 </body>
 </html>

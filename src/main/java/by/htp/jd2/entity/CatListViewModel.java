@@ -10,17 +10,19 @@ public class CatListViewModel extends AbstractEntity{
     private String photoPath;
     private String description;
     private int requestAmount;
+    private int ownerId;
 
     public CatListViewModel() {
     }
 
-    public CatListViewModel(int idPk, String name, int age, String breed, String photoPath, String description) {
+    public CatListViewModel(int idPk, String name, int age, String breed, String photoPath, String description, int ownerId) {
         super(idPk);
         this.name = name;
         this.age = age;
         this.breed = breed;
         this.photoPath = photoPath;
         this.description = description;
+        this.ownerId = ownerId;
     }
 
     public CatListViewModel(int idPk) {
@@ -73,6 +75,14 @@ public class CatListViewModel extends AbstractEntity{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

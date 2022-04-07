@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: srezrez
@@ -30,11 +31,13 @@
                     <label>Описание:</label>
                     <label>${cat.description}</label><br/>
                 </div>
-                <form action="MyController" method="post">
-                    <input type="hidden" name="command" value="SEND_REQUEST">
-                    <input type="hidden" name="id-cat" value=${cat.idPk}>
-                    <input type="submit" value="Отправить заявку">
-                </form>
+                <c:if test="${cat.ownerId != sessionScope.idUser}">
+                    <form action="MyController" method="post">
+                        <input type="hidden" name="command" value="SEND_REQUEST">
+                        <input type="hidden" name="id-cat" value=${cat.idPk}>
+                        <input type="submit" value="Отправить заявку">
+                    </form>
+                </c:if>
             </div>
         </section>
     </div>

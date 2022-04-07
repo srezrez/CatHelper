@@ -29,6 +29,7 @@ public final class CommandProvider {
 		commands.put(GO_TO_CAT_REQUEST_PAGE_COMMAND, new GoToCatRequestPage());
 		commands.put(APPROVE_REQUEST_COMMAND, new ApproveRequestCommand());
 		commands.put(REJECT_REQUEST_COMMAND, new RejectRequestCommand());
+		commands.put(FILTER_REQUESTS_COMMAND, new FilterRequestsCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

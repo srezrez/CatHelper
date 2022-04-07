@@ -22,7 +22,7 @@ public class RequestDAOImpl implements RequestDAO {
     private static final String SQL_UPDATE_REQUEST = "UPDATE request SET date_issue = ?, id_status = ? where id_request = ?";
     private static final String SQL_SELECT_ALL_REQUEST = "select * from request";
     private static final String SQL_SELECT_REQUEST_AMOUNT_BY_CAT = "select count(*) from request where id_cat = ? and id_status = 1";
-    private static final String SQL_SELECT_REQUESTS_BY_USER_ID = "SELECT * FROM cathelper.request where id_user_requester = ? and id_status = 1";
+    private static final String SQL_SELECT_REQUESTS_BY_USER_ID = "SELECT * FROM cathelper.request where id_user_requester = ? and id_status = ?";
     private static final String SQL_SELECT_REQUEST_QUEUE_AMOUNT = "SELECT count(*) FROM cathelper.request where id_cat = ? and id_status = 1  and date_request <= ?";
     private static final String SQL_CANCEL_REQUEST = "UPDATE request SET id_status = ? where id_request = ?";
     private static final String SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT = "SELECT count(*) FROM cathelper.request where id_status = 1 and id_cat = ?";
@@ -201,13 +201,14 @@ public class RequestDAOImpl implements RequestDAO {
     }
 
     @Override
-    public List<Request> getRequestsByUserId(int idUser) throws DAOException {
+    public List<Request> getRequestsByUserIdAndStatus(int idUser, int idStatus) throws DAOException {
         List<Request> requests = new ArrayList<Request>();
         Connection con = null;
         try {
             con = connectionPool.takeConnection();
             PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUESTS_BY_USER_ID);
             ps.setInt(1, idUser);
+            ps.setInt(2, idStatus);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 requests.add(createRequest(rs));

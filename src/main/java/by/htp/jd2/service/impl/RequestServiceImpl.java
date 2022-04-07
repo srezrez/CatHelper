@@ -27,10 +27,10 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestViewModel> getRequests(int idUser) throws ServiceException {
+    public List<RequestViewModel> getRequests(int idUser, int idStatus) throws ServiceException {
         List<RequestViewModel> requestList = new ArrayList<>();
         try {
-            List<Request> requests = requestDao.getRequestsByUserId(idUser);
+            List<Request> requests = requestDao.getRequestsByUserIdAndStatus(idUser, idStatus);
             for (Request req: requests) {
                 req.setCat(catDao.get(req.getCat().getIdPk()));
             }

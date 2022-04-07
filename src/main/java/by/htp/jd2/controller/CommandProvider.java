@@ -30,6 +30,7 @@ public final class CommandProvider {
 		commands.put(APPROVE_REQUEST_COMMAND, new ApproveRequestCommand());
 		commands.put(REJECT_REQUEST_COMMAND, new RejectRequestCommand());
 		commands.put(FILTER_REQUESTS_COMMAND, new FilterRequestsCommand());
+		commands.put(FILTER_CAT_COMMAND, new FilterCatCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

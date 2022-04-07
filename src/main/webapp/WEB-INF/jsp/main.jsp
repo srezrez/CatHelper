@@ -11,6 +11,32 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
+	<form action="MyController" method="get">
+	<input type="hidden" name="command" value="FILTER_CAT">
+	<div>
+		<h4>Параметры поиска</h4>
+		<h5>Порода</h5>
+		<c:forEach items="${breedList}" var="breed">
+			<input type="checkbox" class="custom-checkbox" value="${breed.idPk}" name="breed">
+			<label>${breed.title}</label>
+			<br/>
+		</c:forEach>
+		<h5>Пол</h5>
+		<div class="gender-class">
+			<input  type="checkbox"
+					name="gender" value="1">
+			<label>мужской</label>
+
+			<input type="checkbox"
+				   name="gender" value="2">
+			<label>женский</label>
+		</div>
+		<div id="buttons">
+			<input type="submit" id="table-btn" value="Применить"/>
+		</div>
+<>
+	</div>
+	</form>
 	<table class ="table">
 		<tr>
 			<th width="40%">Photo</th>

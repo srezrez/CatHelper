@@ -1,15 +1,13 @@
 package by.htp.jd2.service.impl;
 
 import by.htp.jd2.dao.*;
-import by.htp.jd2.entity.Cat;
-import by.htp.jd2.entity.CatListViewModel;
-import by.htp.jd2.entity.Document;
-import by.htp.jd2.entity.DocumentType;
+import by.htp.jd2.entity.*;
 import by.htp.jd2.service.CatService;
 import by.htp.jd2.service.ServiceException;
 
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,6 +94,28 @@ public class CatServiceImpl implements CatService {
             throw new ServiceException("Exception in getCat");
         }
         return cat;
+    }
+
+    @Override
+    public List<CatListViewModel> getAllFreeFilteredCats(List<Breed> breedList, List<Gender> genderList) throws ServiceException {
+        List<CatListViewModel> filteredCatList;
+        try {
+            List<Document> docs = documentDAO.getAllFreeCatPhoto();
+            List<Document> filteredDocs = new ArrayList<>();
+            for (Document doc: docs) {
+                Cat cat = catDAO.get(doc.getCat().getIdPk());
+                cat.setBreed(breedDao.get(cat.getBreed().getIdPk()));
+                doc.setCat(cat);
+                if(breedList.stream().anyMatch(x -> x.getIdPk() == cat.getBreed().getIdPk())
+                        && genderList.stream().anyMatch( y -> y.getIdPk() == cat.getGender().getIdPk())) {
+                    filteredDocs.add(doc);
+                }
+            }
+            filteredCatList = this.createCatListfromDoc(filteredDocs);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in getAllFreeFilteredCats");
+        }
+        return filteredCatList;
     }
 
     private List<CatListViewModel> createCatListfromDoc(List<Document> docs) {

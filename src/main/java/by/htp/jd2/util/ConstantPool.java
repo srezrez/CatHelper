@@ -23,6 +23,8 @@ public class ConstantPool {
 	public static final String APPROVE_REQUEST_COMMAND = "APPROVE_REQUEST";
 	public static final String REJECT_REQUEST_COMMAND = "REJECT_REQUEST";
 	public static final String FILTER_REQUESTS_COMMAND = "FILTER_REQUESTS";
+	public static final String FILTER_CAT_COMMAND = "FILTER_CAT";
+	public static final String GO_TO_PROFILE_PAGE_COMMAND = "GO_TO_PROFILE_PAGE";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -49,6 +51,7 @@ public class ConstantPool {
 	public static final String ID_CAT_PARAMETER = "id-cat";
 	public static final String ID_REQUEST_PARAMETER = "id-request";
 	public static final String STATUS_PARAMETER = "status";
+	public static final String BREED_PARAMETER = "breed";
 	
 	//attribute
 	public static final String USERNAME_ATTRIBUTE = "username";

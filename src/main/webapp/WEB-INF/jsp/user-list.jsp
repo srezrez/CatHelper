@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="loc" var="loc"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,6 +19,21 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div id="body-div">
+    <div>
+        <form action="MyController?command=CHANGE_LOCAL" method="post">
+            <input type="hidden" name="local" value="ru"/>
+            <input type="submit"value=<fmt:message bundle="${loc}" key="namebutton.rus"/> /><br />
+            <input type="hidden" name="url" value="GO_TO_MAIN_PAGE" />
+            <br>
+        </form>
+
+        <form action="MyController?command=CHANGE_LOCAL" method="post">
+            <input type="hidden" name="local" value="en" />
+            <input type="submit" value=<fmt:message bundle="${loc}" key="namebutton.en"/> /><br />
+            <input type="hidden" name="url" value="GO_TO_MAIN_PAGE" />
+            <br>
+        </form>
+    </div>
     <table class="table">
         <tr>
             <th width="25%">Имя и фамилия</th>

@@ -34,6 +34,7 @@ public final class CommandProvider {
 		commands.put(GO_TO_PROFILE_PAGE_COMMAND, new GoToProfilePageCommand());
 		commands.put(CHANGE_PASSWORD_COMMAND, new ChangePasswordCommand());
 		commands.put(GO_TO_USERS_PAGE_COMMAND, new GoToUsersPageCommand());
+		commands.put(CHANGE_USER_ACTIVITY_COMMAND, new ChangeUserActivityCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where id_user = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_ALL_USER = "select * from user";
-    private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET activity = ? where id_user = ?";
+    private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET id_activity = ? where id_user = ?";
 
     @Override
     public int add(User user) throws DAOException {

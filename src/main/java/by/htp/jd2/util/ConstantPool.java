@@ -27,6 +27,7 @@ public class ConstantPool {
 	public static final String GO_TO_PROFILE_PAGE_COMMAND = "GO_TO_PROFILE_PAGE";
 	public static final String CHANGE_PASSWORD_COMMAND = "CHANGE_PASSWORD";
 	public static final String GO_TO_USERS_PAGE_COMMAND = "GO_TO_USERS_PAGE";
+	public static final String CHANGE_USER_ACTIVITY_COMMAND = "CHANGE_USER_ACTIVITY";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -66,6 +67,7 @@ public class ConstantPool {
 	public static final String INFO_PAGE_REDIRECT = "MyController?command=GO_TO_INFO_PAGE";
 	public static final String INDEX_PAGE_REDIRECT = "MyController?command=GO_TO_INDEX_PAGE";
 	public static final String SIGN_IN_PAGE_REDIRECT = "MyController?command=GO_TO_SIGN_IN_PAGE";
+	public static final String USER_LIST_PAGE_REDIRECT = "MyController?command=GO_TO_USERS_PAGE";
 	
 	//message
 	public static final String SIGN_IN_FAIL_MESSAGE = "Incorrect email or password. Please try again";

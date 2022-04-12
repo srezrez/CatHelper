@@ -25,6 +25,7 @@ public class ConstantPool {
 	public static final String FILTER_REQUESTS_COMMAND = "FILTER_REQUESTS";
 	public static final String FILTER_CAT_COMMAND = "FILTER_CAT";
 	public static final String GO_TO_PROFILE_PAGE_COMMAND = "GO_TO_PROFILE_PAGE";
+	public static final String CHANGE_PASSWORD_COMMAND = "CHANGE_PASSWORD";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";

@@ -32,6 +32,7 @@ public final class CommandProvider {
 		commands.put(FILTER_REQUESTS_COMMAND, new FilterRequestsCommand());
 		commands.put(FILTER_CAT_COMMAND, new FilterCatCommand());
 		commands.put(GO_TO_PROFILE_PAGE_COMMAND, new GoToProfilePageCommand());
+		commands.put(CHANGE_PASSWORD_COMMAND, new ChangePasswordCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

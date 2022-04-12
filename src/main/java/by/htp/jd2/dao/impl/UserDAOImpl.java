@@ -19,10 +19,10 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_INSERT_USER = "INSERT INTO user(name, surname, birth_date, email, password, id_role, id_activity) values ( ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_USER = "select * from user where id_user = ?";
     private static final String SQL_DELETE_USER = "delete from user where id_user = ?";
-    private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where idUser = ?";
+    private static final String SQL_UPDATE_USER = "UPDATE user SET password = ? where id_user = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_ALL_USER = "select * from user";
-    private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET activity = ? where idUser = ?";
+    private static final String SQL_UPDATE_USER_ACTIVITY = "UPDATE user SET activity = ? where id_user = ?";
 
     @Override
     public int add(User user) throws DAOException {

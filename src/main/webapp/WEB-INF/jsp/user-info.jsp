@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="header.jsp" />
 <form id="sign-up-Form" action="MyController" method="post">
-  <input type="hidden" name="command" value="change-password">
+  <input type="hidden" name="command" value="CHANGE_PASSWORD">
   <h1>Ваш профиль</h1>
   <div class='user-info-class'>
     <label>Имя:</label>

@@ -12,6 +12,8 @@ import by.htp.jd2.service.UserValidation;
 
 import java.util.List;
 
+import static by.htp.jd2.util.ConstantPool.PASSWORD_PARAMETER;
+
 public class UserServiceImpl implements UserService {
 
     private static final UserValidation userValidation = new UserValidation();
@@ -72,5 +74,16 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public void changePassword(int idUser, String password) throws ServiceException {
+        try {
+            User user = userDAO.get(idUser);
+            user.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
+            userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in changePassword");
+        }
     }
 }

@@ -11,4 +11,5 @@ public interface UserService {
     List<User> getAll() throws ServiceException;
     void changeActivity(int idUser) throws ServiceException;
     User get(int idUser);
+    void changePassword(int idUser, String password) throws ServiceException;
 }

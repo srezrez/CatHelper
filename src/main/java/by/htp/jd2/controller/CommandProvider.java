@@ -33,6 +33,7 @@ public final class CommandProvider {
 		commands.put(FILTER_CAT_COMMAND, new FilterCatCommand());
 		commands.put(GO_TO_PROFILE_PAGE_COMMAND, new GoToProfilePageCommand());
 		commands.put(CHANGE_PASSWORD_COMMAND, new ChangePasswordCommand());
+		commands.put(GO_TO_USERS_PAGE_COMMAND, new GoToUsersPageCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

@@ -25,6 +25,7 @@
     <li><a id="all-cats" href="MyController?command=GO_TO_MAIN_PAGE">ALL cats</a></li>
     <li><a id="added-cats" href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE">Added cats</a></li>
     <li><a id="requests" href="MyController?command=GO_TO_REQUESTS_PAGE">My requests</a></li>
+    <li><a id="users" href="MyController?command=GO_TO_USERS_PAGE">Users</a></li>
 </ul>
 <script src="resources/js/menu-script.js"></script>
 </body>

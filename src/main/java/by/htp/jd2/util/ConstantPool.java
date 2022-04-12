@@ -26,6 +26,7 @@ public class ConstantPool {
 	public static final String FILTER_CAT_COMMAND = "FILTER_CAT";
 	public static final String GO_TO_PROFILE_PAGE_COMMAND = "GO_TO_PROFILE_PAGE";
 	public static final String CHANGE_PASSWORD_COMMAND = "CHANGE_PASSWORD";
+	public static final String GO_TO_USERS_PAGE_COMMAND = "GO_TO_USERS_PAGE";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";
@@ -41,6 +42,7 @@ public class ConstantPool {
 	public static final String CAT_REQUEST_JSP_PATH = "/WEB-INF/jsp/cat-request.jsp";
 	public static final String REQUESTS_TABLE_JSP_PATH = "/WEB-INF/jsp/requests-table.jsp";
 	public static final String USER_INFO_JSP_PATH = "/WEB-INF/jsp/user-info.jsp";
+	public static final String USER_LIST_JSP_PATH = "/WEB-INF/jsp/user-list.jsp";
 	
 	//parameter
 	public static final String NAME_PARAMETER = "name";

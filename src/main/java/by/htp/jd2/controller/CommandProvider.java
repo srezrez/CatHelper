@@ -31,6 +31,7 @@ public final class CommandProvider {
 		commands.put(REJECT_REQUEST_COMMAND, new RejectRequestCommand());
 		commands.put(FILTER_REQUESTS_COMMAND, new FilterRequestsCommand());
 		commands.put(FILTER_CAT_COMMAND, new FilterCatCommand());
+		commands.put(GO_TO_PROFILE_PAGE_COMMAND, new GoToProfilePageCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

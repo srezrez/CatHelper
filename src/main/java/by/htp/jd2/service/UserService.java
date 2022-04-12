@@ -10,4 +10,5 @@ public interface UserService {
     boolean signUp(User user) throws ServiceException;
     List<User> getAll() throws ServiceException;
     void changeActivity(int idUser) throws ServiceException;
+    User get(int idUser);
 }

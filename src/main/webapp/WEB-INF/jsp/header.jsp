@@ -15,7 +15,7 @@
 <div class="header">
     <a href="#default" class="logo">Cat Helper</a>
     <div class="header-right">
-        <a class="active" href=MyController?command=GO_TO_PROFILE_PAGE">Name Surname</a>
+        <a class="active" href="MyController?command=GO_TO_PROFILE_PAGE">Name Surname</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         <a href="#about">Log out</a>

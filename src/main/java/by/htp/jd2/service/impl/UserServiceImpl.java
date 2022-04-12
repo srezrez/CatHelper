@@ -62,4 +62,15 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Exception in changeActivity");
         }
     }
+
+    @Override
+    public User get(int idUser) {
+        User user = null;
+        try {
+            user = userDAO.get(idUser);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

@@ -39,6 +39,7 @@ public class ConstantPool {
 	public static final String CAT_JSP_PATH = "/WEB-INF/jsp/cat.jsp";
 	public static final String CAT_REQUEST_JSP_PATH = "/WEB-INF/jsp/cat-request.jsp";
 	public static final String REQUESTS_TABLE_JSP_PATH = "/WEB-INF/jsp/requests-table.jsp";
+	public static final String USER_INFO_JSP_PATH = "/WEB-INF/jsp/user-info.jsp";
 	
 	//parameter
 	public static final String NAME_PARAMETER = "name";

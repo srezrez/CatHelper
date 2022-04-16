@@ -4,28 +4,19 @@
 // document.getElementsByTagName('head')[0].appendChild(script);
 
 var reqSelect = document.getElementById("req-select");
-console.log("HELLO")
+var table = document.getElementById("req-table");
 $(document).on('change', '#req-select', function(){
     var data = {status: reqSelect.value}
     console.log("Option is= ", data);
     $.ajax({
         type: "GET",
         url: "MyController?command=FILTER_REQUESTS&status=" + reqSelect.value,
+        cache: false,
         success: function(response) {
-            $('#req-table').append(response);
+            var currentTable = document.getElementById("req-table");
+            document.getElementById("req-table").innerHTML ="";
+            var obj = $($.parseHTML(response)).find("#req-table");
+            currentTable.innerHTML = obj.html();
         }
     });
 })
-
-// reqSelect.onchange(function(){
-//     var data = {status: reqSelect.value}
-//     console.log("Option is= ", data);
-//     $.ajax({
-//         type: "GET",
-//         url: "MyController?command=FILTER_REQUESTS&status=" + reqSelect.value,
-//         success: function(response) {
-//             $('#req-table').append(response);
-//             console.log("table", response);
-//         }
-//     });
-// })

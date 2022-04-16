@@ -15,11 +15,11 @@
     <script src="resources/js/jquery.js"></script>
 </head>
 <body>
-<jsp:include page="header.jsp" />
+<jsp:include page="head.jsp" />
 <div id="body-div">
     <select id="req-select"> <!--Supplement an id here instead of using 'name'-->
-        <option value="1">Созданные заявки</option>
-        <option value="2" selected>Одобренные заявки</option>
+        <option value="1" selected>Созданные заявки</option>
+        <option value="2">Одобренные заявки</option>
         <option value="3">Отклоненные заявки</option>
     </select>
     <table class ="table" id="req-table">

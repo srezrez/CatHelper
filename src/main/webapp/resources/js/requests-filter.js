@@ -4,7 +4,6 @@
 // document.getElementsByTagName('head')[0].appendChild(script);
 
 var reqSelect = document.getElementById("req-select");
-var table = document.getElementById("req-table");
 $(document).on('change', '#req-select', function(){
     var data = {status: reqSelect.value}
     console.log("Option is= ", data);
@@ -13,9 +12,8 @@ $(document).on('change', '#req-select', function(){
         url: "MyController?command=FILTER_REQUESTS&status=" + reqSelect.value,
         cache: false,
         success: function(response) {
-            $("#req-table tr").remove();
             var obj = $($.parseHTML(response)).find("#req-table");
-            $("#req-table").append(obj)
+            $("#req-table").replaceWith(obj);
         }
     });
 })

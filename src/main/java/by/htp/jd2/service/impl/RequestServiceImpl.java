@@ -37,6 +37,7 @@ public class RequestServiceImpl implements RequestService {
             requestList = requests.stream().map(x -> {
                 RequestViewModel reqListObj = new RequestViewModel();
                 reqListObj.setIdPk(x.getIdPk());
+                reqListObj.setIdCat(x.getCat().getIdPk());
                 reqListObj.setName(x.getCat().getName());
                 reqListObj.setDateRequest(x.getDateRequest());
                 try {

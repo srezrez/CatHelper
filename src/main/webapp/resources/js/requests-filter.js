@@ -13,10 +13,9 @@ $(document).on('change', '#req-select', function(){
         url: "MyController?command=FILTER_REQUESTS&status=" + reqSelect.value,
         cache: false,
         success: function(response) {
-            var currentTable = document.getElementById("req-table");
-            document.getElementById("req-table").innerHTML ="";
+            $("#req-table tr").remove();
             var obj = $($.parseHTML(response)).find("#req-table");
-            currentTable.innerHTML = obj.html();
+            $("#req-table").append(obj)
         }
     });
 })

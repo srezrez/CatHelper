@@ -12,7 +12,11 @@ public class ChangeLocalCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        session.setAttribute("local", request.getParameter("local"));
+        String locale = (String) session.getAttribute("local");
+        if(locale == null) locale = "ru";
+        locale = locale == "ru" ? "en" : "ru";
+        session.setAttribute("local", locale);
+        String param = request.getParameter("url");
         response.sendRedirect("MyController?command=" + request.getParameter("url"));
     }
 }

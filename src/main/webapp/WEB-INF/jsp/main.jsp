@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="loc" var="loc"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,35 +17,35 @@
 	<form action="MyController" method="get">
 	<input type="hidden" name="command" value="FILTER_CAT">
 	<div>
-		<h4>Параметры поиска</h4>
-		<h5>Порода</h5>
+		<h4><fmt:message bundle="${loc}" key="search.message" /></h4>
+		<h5><fmt:message bundle="${loc}" key="search.breed" /></h5>
 		<c:forEach items="${breedList}" var="breed">
 			<input type="checkbox" class="custom-checkbox" value="${breed.idPk}" name="breed">
 			<label>${breed.title}</label>
 			<br/>
 		</c:forEach>
-		<h5>Пол</h5>
+		<h5><fmt:message bundle="${loc}" key="search.gender" /></h5>
 		<div class="gender-class">
 			<input  type="checkbox"
 					name="gender" value="1">
-			<label>мужской</label>
+			<label><fmt:message bundle="${loc}" key="lbl.male" /></label>
 
 			<input type="checkbox"
 				   name="gender" value="2">
-			<label>женский</label>
+			<label><fmt:message bundle="${loc}" key="lbl.female" /></label>
 		</div>
 		<div id="buttons">
-			<input type="submit" id="table-btn" value="Применить"/>
+			<input type="submit" id="table-btn" value=<fmt:message bundle="${loc}" key="btn.submit" />/>
 		</div>
 <>
 	</div>
 	</form>
 	<table class ="table">
 		<tr>
-			<th width="40%">Photo</th>
-			<th width="25%">Name</th>
-			<th width="20%">Age</th>
-			<th width="25%">Breed</th>
+			<th width="40%"><fmt:message bundle="${loc}" key="tbl.photo" /></th>
+			<th width="25%"><fmt:message bundle="${loc}" key="tbl.name" /></th>
+			<th width="20%"><fmt:message bundle="${loc}" key="tbl.age" /></th>
+			<th width="25%"><fmt:message bundle="${loc}" key="tbl.breed" /></th>
 			<th width="30%"></th>
 		</tr>
 		<c:forEach items="${catList}" var="cat">
@@ -54,7 +57,7 @@
             <td><form action="MyController" method="get">
                 <input type="hidden" name="command" value="GO_TO_CAT_PAGE">
                 <input type="hidden" name="id-cat" value=${cat.idPk}>
-                <input class="table-btn" type="submit" value="More...">
+                <input class="table-btn" type="submit" value=<fmt:message bundle="${loc}" key="btn.more" />>
             </form></td>
 		</tr>
 		</c:forEach>

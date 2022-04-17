@@ -1,17 +1,7 @@
 package by.htp.jd2.controller;
 
-import by.htp.jd2.dao.util.DBResourceManager;
-import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceFactory;
-import by.htp.jd2.service.UserService;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +45,8 @@ public class Controller extends HttpServlet {
 			response.sendRedirect(SIGN_IN_PAGE_REDIRECT);
 			return;
 		}
+		StringBuffer urll = request.getRequestURL();
+		String urii = request.getRequestURI();
 		String commandName = request.getParameter(COMMAND_PARAM);
 		Command command = provider.getCommand(commandName);
 		command.execute(request, response);

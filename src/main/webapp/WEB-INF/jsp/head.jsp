@@ -2,6 +2,7 @@
 <div class="header">
     <a href="#default" class="logo">Cat Helper</a>
     <div class="header-right">
+        <a href="MyController?command=GO_TO_PROFILE_PAGE">RU/ENG</a>
         <a class="active" href="MyController?command=GO_TO_PROFILE_PAGE">Name Surname</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>

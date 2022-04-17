@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="loc" var="loc"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,13 +19,13 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-    <h1>Информация о котике: ${cat.name}</h1>
+    <h1><fmt:message bundle="${loc}" key="msg.catrequests" /> ${cat.name}</h1>
     <table class ="table">
         <tr>
-            <th width="25%">Количество активных запросов</th>
-            <th width="20%">Текущий пользователь</th>
-            <th width="25%">Электронная почта для связи</th>
-            <th width="25%">Решение</th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.activereqamount" /></th>
+            <th width="20%"><fmt:message bundle="${loc}" key="tbl.currentuser" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.contactemail" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.decision" /></th>
         </tr>
             <tr>
                 <td>${catRequest.requestAmount}</td>
@@ -32,12 +35,12 @@
                     <form action="MyController" method="post">
                         <input type="hidden" name="command" value="APPROVE_REQUEST">
                         <input type="hidden" name="id-request" value=${catRequest.idPk}>
-                        <input type="submit" class="table-btn" value="Принять">
+                        <input type="submit" class="table-btn" value=<fmt:message bundle="${loc}" key="btn.accept" />>
                     </form>
                     <form action="MyController" method="post">
                         <input type="hidden" name="command" value="REJECT_REQUEST">
                         <input type="hidden" name="id-request" value=${catRequest.idPk}>
-                        <input type="submit" class="table-btn" value="Отказать">
+                        <input type="submit" class="table-btn" value=<fmt:message bundle="${loc}" key="btn.reject" />>
                     </form>
                 </td>
             </tr>

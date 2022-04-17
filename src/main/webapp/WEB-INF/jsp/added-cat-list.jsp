@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="loc" var="loc"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,14 +21,14 @@
 <div id="body-div">
     <form action="MyController" method="get">
         <input type="hidden" name="command" value="GO_TO_ADD_CAT_PAGE">
-        <input type="submit" value="Добавить кота">
+        <input type="submit" value=<fmt:message bundle="${loc}" key="msg.addcat" />>
     </form>
     <table class ="table">
         <tr>
-            <th width="25%">Имя</th>
-            <th width="20%">Возраст</th>
-            <th width="25%">Порода</th>
-            <th width="25%">Количество заявок</th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.name" /></th>
+            <th width="20%"><fmt:message bundle="${loc}" key="tbl.age" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.breed" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.requestsamount" /></th>
             <th width="30%"></th>
         </tr>
         <c:forEach items="${addedCatList}" var="cat">
@@ -39,7 +42,7 @@
                         <form action="MyController" method="get">
                             <input type="hidden" name="command" value="GO_TO_CAT_REQUEST_PAGE">
                             <input type="hidden" name="id-cat" value=${cat.idPk}>
-                            <input type="submit" class="table-btn" value="Подробнее...">
+                            <input type="submit" class="table-btn" value=<fmt:message bundle="${loc}" key="btn.more" />>
                         </form>
                     </c:if>
                 </td>

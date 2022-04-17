@@ -4,12 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link href="resources/css/style.css" type="text/css" rel="stylesheet" />
 <title>Insert title here</title>
 	<fmt:setLocale value="${sessionScope.locale}" />
 </head>
 <body>
+<c:set var="local" scope="session" value="ru"/>
 <div class="welcome-div">
 <h1>Welcome to my application</h1>
 

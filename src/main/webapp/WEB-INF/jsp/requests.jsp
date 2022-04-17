@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="loc" var="loc"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,16 +21,16 @@
 <jsp:include page="head.jsp" />
 <div id="body-div">
     <select id="req-select"> <!--Supplement an id here instead of using 'name'-->
-        <option value="1" selected>Созданные заявки</option>
-        <option value="2">Одобренные заявки</option>
-        <option value="3">Отклоненные заявки</option>
+        <option value="1" selected><fmt:message bundle="${loc}" key="option.createdRequests" /></option>
+        <option value="2"><fmt:message bundle="${loc}" key="option.approvedRequests" /></option>
+        <option value="3"><fmt:message bundle="${loc}" key="option.deniedRequests" /></option>
     </select>
     <table class ="table" id="req-table">
         <tr>
-            <th width="25%">Имя</th>
-            <th width="20%">Дата заявки</th>
-            <th width="25%">Номер в очереди</th>
-            <th width="25%">Статус</th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.name" /></th>
+            <th width="20%"><fmt:message bundle="${loc}" key="tbl.requestdate" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.numberinqueue" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.status" /></th>
             <th width="30%"></th>
         </tr>
         <c:forEach items="${requests}" var="request">
@@ -39,12 +42,12 @@
                 <td><form action="MyController" method="get">
                     <input type="hidden" name="command" value="GO_TO_CAT_PAGE">
                     <input type="hidden" name="id-cat" value=${request.idCat}>
-                    <input class="table-btn" type="submit" value="Подробнее...">
+                    <input class="table-btn" type="submit" value=<fmt:message bundle="${loc}" key="btn.more" />>
                 </form>
                     <form action="MyController" method="get">
                         <input type="hidden" name="command" value="CANCEL_REQUEST">
                         <input type="hidden" name="id-cat" value=${request.idPk}>
-                        <input class="table-btn" type="submit" value="Отменить">
+                        <input class="table-btn" type="submit" value=<fmt:message bundle="${loc}" key="btn.cancel" />>
                     </form>
                 </td>
             </tr>

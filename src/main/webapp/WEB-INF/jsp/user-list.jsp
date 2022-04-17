@@ -19,28 +19,13 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div id="body-div">
-    <div>
-        <form action="MyController?command=CHANGE_LOCAL" method="post">
-            <input type="hidden" name="local" value="ru"/>
-            <input type="submit"value=<fmt:message bundle="${loc}" key="namebutton.rus"/> /><br />
-            <input type="hidden" name="url" value="GO_TO_MAIN_PAGE" />
-            <br>
-        </form>
-
-        <form action="MyController?command=CHANGE_LOCAL" method="post">
-            <input type="hidden" name="local" value="en" />
-            <input type="submit" value=<fmt:message bundle="${loc}" key="namebutton.en"/> /><br />
-            <input type="hidden" name="url" value="GO_TO_MAIN_PAGE" />
-            <br>
-        </form>
-    </div>
     <table class="table">
         <tr>
-            <th width="25%">Имя и фамилия</th>
-            <th width="20%">Дата рождения</th>
-            <th width="25%">Электронная почта</th>
-            <th width="25%">Роль</th>
-            <th width="25%">Активность</th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.namesurname" /></th>
+            <th width="20%"><fmt:message bundle="${loc}" key="tbl.birthdate" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.email" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.role" /></th>
+            <th width="25%"><fmt:message bundle="${loc}" key="tbl.activity" /></th>
             <th width="30%"></th>
         </tr>
         <c:forEach items="${userList}" var="user">
@@ -52,9 +37,9 @@
                 <td>${user.activity.title}</td>
                 <td>
                     <form action="MyController" method="post">
-                        <input type="hidden" name="command" value="CHANGE_USER_ACTIVITY">
-                        <input type="hidden" name="idUser" value=${user.idPk}>
-                        <input type="submit" class="table-btn" value="Изменить активность">
+                        <input type="hidden" name="command" value="CHANGE_USER_ACTIVITY" />
+                        <input type="hidden" name="idUser" value=${user.idPk} />
+                        <input type="submit" class="table-btn" value="<fmt:message bundle="${loc}" key="btn.changeactivity"/>" />
                     </form>
                 </td>
             </tr>

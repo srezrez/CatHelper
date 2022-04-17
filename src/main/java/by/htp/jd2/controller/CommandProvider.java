@@ -36,6 +36,7 @@ public final class CommandProvider {
 		commands.put(GO_TO_USERS_PAGE_COMMAND, new GoToUsersPageCommand());
 		commands.put(CHANGE_USER_ACTIVITY_COMMAND, new ChangeUserActivityCommand());
 		commands.put(CHANGE_LOCAL_COMMAND, new ChangeLocalCommand());
+		commands.put(LOG_OUT_COMMAND, new LogOutCommand());
 	}
 	
 	public final Command getCommand(String commandName) {

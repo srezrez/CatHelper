@@ -48,4 +48,13 @@ xsi:schemaLocation="http://xmls.jcp.org/xml/ns/javaee http://xmls.jcp.org/xml/ns
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>UserFilter</filter-name>
+    <filter-class>by.htp.jd2.controller.filter.UserFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 </web-app>

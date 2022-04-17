@@ -29,6 +29,7 @@ public class ConstantPool {
 	public static final String GO_TO_USERS_PAGE_COMMAND = "GO_TO_USERS_PAGE";
 	public static final String CHANGE_USER_ACTIVITY_COMMAND = "CHANGE_USER_ACTIVITY";
 	public static final String CHANGE_LOCAL_COMMAND = "CHANGE_LOCAL";
+	public static final String LOG_OUT_COMMAND = "LOG_OUT";
 	
 	//path
 	public static final String ERROR_JSP_PATH = "/WEB-INF/jsp/error.jsp";

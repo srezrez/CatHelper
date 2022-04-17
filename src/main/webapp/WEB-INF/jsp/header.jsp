@@ -24,7 +24,7 @@
         <a class="active" href="MyController?command=GO_TO_PROFILE_PAGE">Name Surname</a>
         <a href="#contact"><fmt:message bundle="${loc}" key="menu.contact" /></a>
         <a href="#about"><fmt:message bundle="${loc}" key="menu.about" /></a>
-        <a href="#about"><fmt:message bundle="${loc}" key="menu.logout" /></a>
+        <a href="MyController?command=LOG_OUT"><fmt:message bundle="${loc}" key="menu.logout" /></a>
     </div>
 </div>
 <ul >

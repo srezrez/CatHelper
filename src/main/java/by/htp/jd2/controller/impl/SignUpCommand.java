@@ -37,7 +37,7 @@ public class SignUpCommand implements Command {
 		try {
 			user = new User(request.getParameter(NAME_PARAMETER), request.getParameter(SURNAME_PARAMETER),
 					new SimpleDateFormat("yyyy-mm-dd").parse(request.getParameter(BIRTH_DATE_PARAMETER)),
-					request.getParameter(EMAIL_PARAMETER), request.getParameter(PASSWORD_PARAMETER), Role.ADMIN, Activity.ACTIVE);
+					request.getParameter(EMAIL_PARAMETER), request.getParameter(PASSWORD_PARAMETER), Role.USER, Activity.ACTIVE);
 			boolean result = userService.signUp(user);
 			if(result) {
 				response.sendRedirect(INFO_PAGE_REDIRECT + "&" + INFO_MS_PARAMETER + "=" + SIGN_UP_SUCCESS_MESSAGE);

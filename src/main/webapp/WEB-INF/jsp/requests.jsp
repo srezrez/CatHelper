@@ -18,7 +18,7 @@
     <script src="resources/js/jquery.js"></script>
 </head>
 <body>
-<jsp:include page="head.jsp" />
+<jsp:include page="header.jsp" />
 <div id="body-div">
     <select id="req-select"> <!--Supplement an id here instead of using 'name'-->
         <option value="1" selected><fmt:message bundle="${loc}" key="option.createdRequests" /></option>

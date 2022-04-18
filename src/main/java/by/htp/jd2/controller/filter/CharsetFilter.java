@@ -17,9 +17,9 @@ public class CharsetFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletRequest.setCharacterEncoding(encoding);
-        servletResponse.setCharacterEncoding(encoding);
-        servletResponse.setContentType("text/html;charset=" + encoding);
+//        servletRequest.setCharacterEncoding(encoding);
+//        servletResponse.setCharacterEncoding(encoding);
+//        servletResponse.setContentType("text/html;charset=" + encoding);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<link href="resources/css/style.css" type="text/css" rel="stylesheet" />
+<link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -37,7 +37,6 @@
 		<div id="buttons">
 			<input type="submit" id="table-btn" value=<fmt:message bundle="${loc}" key="btn.submit" />/>
 		</div>
-<>
 	</div>
 	</form>
 	<table class ="table">

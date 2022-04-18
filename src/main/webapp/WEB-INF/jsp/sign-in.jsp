@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/style.css" type="text/css" rel="stylesheet" />
+<link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 <c:if test="${sessionExpired}" var="testif">
@@ -17,7 +17,6 @@
 		Session expired. Please, sign in again
 	</h3>
 </c:if>
-<jsp:include page="header.jsp" />
 <form id="sign-in-Form" action="MyController" method="post">
 	<input type="hidden" name="command" value="sign-in">
 	<h1><fmt:message bundle="${loc}" key="msg.signin" /></h1>

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         if(!userValidation.signInValidation(email, password))
             throw new ServiceException("User Validation Exception");
         User user = userDAO.getByEmail(email);
-        if(user == null || !((BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified)) {
+        if(user == null || user.getActivity() == Activity.BLOCKED || !((BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified)) {
             return null;
         }
         return user;

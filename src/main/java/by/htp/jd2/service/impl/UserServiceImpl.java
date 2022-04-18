@@ -38,6 +38,8 @@ public class UserServiceImpl implements UserService {
         try {
             if(userDAO.getByEmail(user.getEmail()) != null)
                 return false;
+            user.setPassword(BCrypt.withDefaults().
+                    hashToString(12, user.getPassword().toCharArray()));
             userDAO.add(user);
         } catch (DAOException e) {
             throw new ServiceException("Exception in sign up");

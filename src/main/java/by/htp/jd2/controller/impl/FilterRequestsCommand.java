@@ -25,7 +25,7 @@ public class FilterRequestsCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         RequestService requestService = serviceFactory.getRequestService();
         try {
-            List<RequestViewModel> requests = requestService.getRequests(((User)session.getAttribute("idUser")).getIdPk(), Integer.parseInt(request.getParameter(STATUS_PARAMETER)));
+            List<RequestViewModel> requests = requestService.getRequests(((User)session.getAttribute(USER_ATTRIBUTE)).getIdPk(), Integer.parseInt(request.getParameter(STATUS_PARAMETER)));
             request.setAttribute("requests", requests);
             RequestDispatcher dispatcher = request.getRequestDispatcher(REQUESTS_JSP_PATH);
             dispatcher.forward(request, response);

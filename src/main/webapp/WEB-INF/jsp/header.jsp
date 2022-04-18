@@ -32,6 +32,7 @@
     <li><a id="added-cats" href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE"><fmt:message bundle="${loc}" key="menu.addedcats" /></a></li>
     <li><a id="requests" href="MyController?command=FILTER_REQUESTS&status=1"><fmt:message bundle="${loc}" key="menu.myrequests" /></a></li>
     <li><a id="users" href="MyController?command=GO_TO_USERS_PAGE"><fmt:message bundle="${loc}" key="menu.users" /></a></li>
+    <li><a id="add-cat" href="MyController?command=GO_TO_ADD_CAT_PAGE"><fmt:message bundle="${loc}" key="msg.addcat" /></a></li>
 </ul>
 <script src="resources/js/menu-script.js"></script>
 <script src="resources/js/url-addition.js"></script>

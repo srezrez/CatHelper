@@ -19,10 +19,6 @@
 <body>
 <jsp:include page="header.jsp" />
 <div id="body-div">
-    <form action="MyController" method="get">
-        <input type="hidden" name="command" value="GO_TO_ADD_CAT_PAGE">
-        <input type="submit" value=<fmt:message bundle="${loc}" key="msg.addcat" />>
-    </form>
     <table class ="table">
         <tr>
             <th width="25%"><fmt:message bundle="${loc}" key="tbl.name" /></th>

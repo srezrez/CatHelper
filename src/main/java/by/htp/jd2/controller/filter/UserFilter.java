@@ -23,7 +23,7 @@ public class UserFilter implements Filter {
         }
         if(!command.equals(GO_TO_SIGN_IN_PAGE_COMMAND) && !command.equals(GO_TO_SIGN_IN_PAGE_COMMAND) && !command.equals(GO_TO_INDEX_PAGE_COMMAND)
                 && !command.equals(SIGN_IN_COMMAND) && !command.equals(SIGN_UP_COMMAND)
-                && request.getSession(true).getAttribute("idUser") == null) {
+                && request.getSession(true).getAttribute(USER_ATTRIBUTE) == null) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect(INDEX_PAGE_REDIRECT);
             return;

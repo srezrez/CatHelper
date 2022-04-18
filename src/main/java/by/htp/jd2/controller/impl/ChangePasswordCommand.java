@@ -1,6 +1,7 @@
 package by.htp.jd2.controller.impl;
 
 import by.htp.jd2.controller.Command;
+import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceFactory;
 import by.htp.jd2.service.UserService;
@@ -21,7 +22,7 @@ public class ChangePasswordCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
         try {
-            userService.changePassword((int)session.getAttribute("idUser"), request.getParameter(PASSWORD_PARAMETER));
+            userService.changePassword(((User)session.getAttribute("idUser")).getIdPk(), request.getParameter(PASSWORD_PARAMETER));
             response.sendRedirect(MAIN_PAGE_REDIRECT);
         } catch (ServiceException e) {
             e.printStackTrace();

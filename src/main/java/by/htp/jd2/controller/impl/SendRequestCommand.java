@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import static by.htp.jd2.util.ConstantPool.MAIN_PAGE_REDIRECT;
+import static by.htp.jd2.util.ConstantPool.USER_ATTRIBUTE;
 
 public class SendRequestCommand implements Command {
     @Override
@@ -24,7 +25,7 @@ public class SendRequestCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         RequestService requestService = serviceFactory.getRequestService();
         HttpSession session = request.getSession(true);
-        Request req = new Request(new Date(), null, new User((int)session.getAttribute("idUser")),
+        Request req = new Request(new Date(), null, (User)session.getAttribute(USER_ATTRIBUTE),
                 new Cat(Integer.parseInt(request.getParameter("id-cat"))), Status.REQUEST_CREATED);
         try {
             requestService.sendRequest(req);

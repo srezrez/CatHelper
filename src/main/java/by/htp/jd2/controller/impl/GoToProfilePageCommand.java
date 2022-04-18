@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.htp.jd2.util.ConstantPool.USER_ATTRIBUTE;
 import static by.htp.jd2.util.ConstantPool.USER_INFO_JSP_PATH;
 
 public class GoToProfilePageCommand implements Command {
@@ -20,7 +21,7 @@ public class GoToProfilePageCommand implements Command {
         HttpSession session = request.getSession(true);
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
-        User userInfo = userService.get((int)session.getAttribute("idUser"));
+        User userInfo = userService.get(((User)session.getAttribute(USER_ATTRIBUTE)).getIdPk());
         request.setAttribute("userInfo", userInfo);
         RequestDispatcher dispatcher = request.getRequestDispatcher(USER_INFO_JSP_PATH);
         dispatcher.forward(request, response);

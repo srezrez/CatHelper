@@ -23,7 +23,6 @@ public class GoToCatPageCommand implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         CatService catService = factory.getCatService();
         HttpSession session = request.getSession(true);
-        int id = (int)session.getAttribute("idUser");
         try {
             CatListViewModel catInfo = catService.getCatInfo(Integer.parseInt(request.getParameter(ID_CAT_PARAMETER)));
             request.setAttribute("cat", catInfo);

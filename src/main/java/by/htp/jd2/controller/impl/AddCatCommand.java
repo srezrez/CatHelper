@@ -30,7 +30,7 @@ public class AddCatCommand implements Command {
         CatService catService = factory.getCatService();
         try {
             Cat cat = new Cat(request.getParameter("name"), new SimpleDateFormat("yyyy-mm-dd").parse(request.getParameter(BIRTH_DATE_PARAMETER)),
-                    new User((int)session.getAttribute("idUser")), new Breed(Integer.parseInt(request.getParameter("breed"))),
+                    (User)session.getAttribute(USER_ATTRIBUTE), new Breed(Integer.parseInt(request.getParameter("breed"))),
                     Gender.getById(Integer.parseInt(request.getParameter("gender"))), request.getParameter("description"));
             Part filePart = request.getPart("catPhoto");
             String fileName = filePart.getSubmittedFileName();

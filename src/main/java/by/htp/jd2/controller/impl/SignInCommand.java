@@ -32,7 +32,9 @@ public class SignInCommand implements Command {
 			if(user == null) {
 				response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SIGN_IN_FAIL_MESSAGE);
 			} else {
-				session.setAttribute("idUser", user.getIdPk());
+				user.setPassword(null);
+				user.setEmail(null);
+				session.setAttribute(USER_ATTRIBUTE, user);
 				response.sendRedirect(MAIN_PAGE_REDIRECT);
 			}
 		} catch (ServiceException e) {

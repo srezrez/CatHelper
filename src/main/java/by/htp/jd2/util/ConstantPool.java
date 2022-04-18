@@ -62,6 +62,7 @@ public class ConstantPool {
 	
 	//attribute
 	public static final String USERNAME_ATTRIBUTE = "username";
+	public static final String USER_ATTRIBUTE = "user";
 	
 	//redirect
 	public static final String MAIN_PAGE_REDIRECT = "MyController?command=GO_TO_MAIN_PAGE";

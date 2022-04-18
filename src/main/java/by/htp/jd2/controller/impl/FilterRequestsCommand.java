@@ -2,6 +2,7 @@ package by.htp.jd2.controller.impl;
 
 import by.htp.jd2.controller.Command;
 import by.htp.jd2.entity.RequestViewModel;
+import by.htp.jd2.entity.User;
 import by.htp.jd2.service.RequestService;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceFactory;
@@ -24,7 +25,7 @@ public class FilterRequestsCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         RequestService requestService = serviceFactory.getRequestService();
         try {
-            List<RequestViewModel> requests = requestService.getRequests((int)session.getAttribute("idUser"), Integer.parseInt(request.getParameter(STATUS_PARAMETER)));
+            List<RequestViewModel> requests = requestService.getRequests(((User)session.getAttribute("idUser")).getIdPk(), Integer.parseInt(request.getParameter(STATUS_PARAMETER)));
             request.setAttribute("requests", requests);
             RequestDispatcher dispatcher = request.getRequestDispatcher(REQUESTS_JSP_PATH);
             dispatcher.forward(request, response);

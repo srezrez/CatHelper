@@ -34,11 +34,11 @@
                     <label><fmt:message bundle="${loc}" key="lbl.description" /></label>
                     <label>${cat.description}</label><br/>
                 </div>
-                <c:if test="${cat.ownerId != sessionScope.idUser}">
+                <c:if test="${cat.ownerId != sessionScope.user.idPk}">
                     <form action="MyController" method="post">
                         <input type="hidden" name="command" value="SEND_REQUEST">
                         <input type="hidden" name="id-cat" value=${cat.idPk}>
-                        <input type="submit" value=<fmt:message bundle="${loc}" key="btn.sendrequest" />>
+                        <input type="submit" value="<fmt:message bundle="${loc}" key="btn.sendrequest" />">
                     </form>
                 </c:if>
             </div>

@@ -18,7 +18,8 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
-<form id="sign-up-Form" action="MyController" method="post">
+<div id="body-div">
+<form action="MyController" method="post">
   <input type="hidden" name="command" value="CHANGE_PASSWORD">
   <h1><fmt:message bundle="${loc}" key="msg.userprofile" /></h1>
   <div class='user-info-class'>
@@ -43,6 +44,7 @@
     <input type="submit" value=<fmt:message bundle="${loc}" key="btn.changepass" />/>
   </div>
 </form>
+</div>
 <script src="resources/js/sign-up-validation.js"></script>
 </body>
 </html>

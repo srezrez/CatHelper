@@ -147,7 +147,12 @@ public class CatServiceImpl implements CatService {
         return catList;
     }
 
-    private int calculateAge(Date date) {
-        return Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), java.time.LocalDate.now()).getYears();
+    private String calculateAge(Date date) {
+        int years = Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), java.time.LocalDate.now()).getYears();
+        if (years == 0) {
+            int months = Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), java.time.LocalDate.now()).getMonths();
+            return months + " (месяцев)";
+        }
+        return years + " (лет)";
     }
 }

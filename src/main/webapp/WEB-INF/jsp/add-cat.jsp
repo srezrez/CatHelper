@@ -26,7 +26,7 @@
         <input name="name" id="name" type="text" minlength="2" maxlength="25" placeholder="Имя"/>
         <span class="error" aria-live="polite"></span>
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.birthDate"/></label>
-        <input id="birth-date" type="date" name="birth-date" min="2018-01-01" max="2018-12-31" value="2018-07-22">
+        <input id="birth-date" type="date" name="birth-date" min="2018-01-01">
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.breed"/></label>
         <select name="breed" class="breed-class">
             <c:forEach items="${breedList}" var="breed">

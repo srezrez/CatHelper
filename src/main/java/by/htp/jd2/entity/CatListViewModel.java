@@ -5,7 +5,7 @@ import java.util.Objects;
 public class CatListViewModel extends AbstractEntity{
 
     private String name;
-    private int age;
+    private String age;
     private String breed;
     private String photoPath;
     private String description;
@@ -16,7 +16,7 @@ public class CatListViewModel extends AbstractEntity{
     public CatListViewModel() {
     }
 
-    public CatListViewModel(int idPk, String name, int age, String breed, String photoPath, String description, int ownerId, Gender gender) {
+    public CatListViewModel(int idPk, String name, String age, String breed, String photoPath, String description, int ownerId, Gender gender) {
         super(idPk);
         this.name = name;
         this.age = age;
@@ -39,11 +39,11 @@ public class CatListViewModel extends AbstractEntity{
         this.name = name;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

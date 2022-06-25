@@ -20,6 +20,8 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public void sendRequest(Request request) throws ServiceException {
         try {
+            if(requestDao.getActiveRequestByCatAndUser(request.getCat().getIdPk(), request.getRequester().getIdPk()) != null)
+                throw new ServiceException("Request already exists");
             requestDao.add(request);
         } catch (DAOException e) {
             throw new ServiceException("Exception in sendRequest");

@@ -14,4 +14,5 @@ public interface RequestDAO extends BaseDAO<Request>{
     void cancelRequest (int idRequest) throws DAOException;
     int getRequestQueueAmount (int idCat) throws DAOException;
     Request getFirstActiveRequestByCat (int idCat) throws DAOException;
+    Request getActiveRequestByCatAndUser (int idCat, int idUser) throws DAOException;
 }

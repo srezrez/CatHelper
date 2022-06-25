@@ -8,6 +8,7 @@ import by.htp.jd2.service.ServiceException;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,6 +101,8 @@ public class CatServiceImpl implements CatService {
     public List<CatListViewModel> getAllFreeFilteredCats(List<Breed> breedList, List<Gender> genderList) throws ServiceException {
         List<CatListViewModel> filteredCatList;
         try {
+            if(breedList == null) breedList = breedDao.getAll();
+            if(genderList == null) genderList = Arrays.stream(Gender.values()).toList();
             List<Document> docs = documentDAO.getAllFreeCatPhoto();
             List<Document> filteredDocs = new ArrayList<>();
             for (Document doc: docs) {

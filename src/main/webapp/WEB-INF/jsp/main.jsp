@@ -41,10 +41,11 @@
 	</form>
 	<table class ="table">
 		<tr>
-			<th width="40%"><fmt:message bundle="${loc}" key="tbl.photo" /></th>
+			<th width="30%"><fmt:message bundle="${loc}" key="tbl.photo" /></th>
 			<th width="25%"><fmt:message bundle="${loc}" key="tbl.name" /></th>
 			<th width="20%"><fmt:message bundle="${loc}" key="tbl.age" /></th>
 			<th width="25%"><fmt:message bundle="${loc}" key="tbl.breed" /></th>
+			<th width="10%"><fmt:message bundle="${loc}" key="tbl.gender" /></th>
 			<th width="30%"></th>
 		</tr>
 		<c:forEach items="${catList}" var="cat">
@@ -53,6 +54,7 @@
 			<td>${cat.name}</td>
 			<td>${cat.age}</td>
 			<td>${cat.breed}</td>
+			<td>${cat.gender.title}</td>
             <td><form action="MyController" method="get">
                 <input type="hidden" name="command" value="GO_TO_CAT_PAGE">
                 <input type="hidden" name="id-cat" value=${cat.idPk}>

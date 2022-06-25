@@ -31,6 +31,8 @@
                     <label>${cat.age}</label><br/>
                     <label><fmt:message bundle="${loc}" key="lbl.breed" /></label>
                     <label>${cat.breed}</label><br/>
+                    <label><fmt:message bundle="${loc}" key="lbl.gender" /></label>
+                    <label>${cat.gender.title}</label><br/>
                     <label><fmt:message bundle="${loc}" key="lbl.description" /></label>
                     <label>${cat.description}</label><br/>
                 </div>

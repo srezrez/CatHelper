@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ChangeLocalCommand implements Command {
     @Override
@@ -16,7 +17,13 @@ public class ChangeLocalCommand implements Command {
         if(locale == null) locale = "ru";
         locale = locale == "ru" ? "en" : "ru";
         session.setAttribute("local", locale);
-        String param = request.getParameter("url");
-        response.sendRedirect("MyController?command=" + request.getParameter("url"));
+        String reqUrl = request.getRequestURI().toString() + request.getQueryString().toString();
+        String[] params = reqUrl.split("&");
+        String commandParam = request.getParameter("url");
+        StringBuilder paramsString = new StringBuilder();
+        for (int i = 2; i< params.length; i++) {
+            paramsString.append("&" + params[i]);
+        }
+        response.sendRedirect("MyController?command=" + request.getParameter("url") + paramsString);
     }
 }

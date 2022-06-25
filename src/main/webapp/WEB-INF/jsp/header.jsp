@@ -13,7 +13,7 @@
         <a href="MyController?command=LOG_OUT"><fmt:message bundle="${loc}" key="menu.logout" /></a>
     </div>
 </div>
-<ul >
+<ul class="header">
     <li><a id="all-cats" href="MyController?command=GO_TO_MAIN_PAGE"><fmt:message bundle="${loc}" key="menu.allcats" /></a></li>
     <li><a id="added-cats" href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE"><fmt:message bundle="${loc}" key="menu.addedcats" /></a></li>
     <li><a id="requests" href="MyController?command=FILTER_REQUESTS&status=1"><fmt:message bundle="${loc}" key="menu.myrequests" /></a></li>

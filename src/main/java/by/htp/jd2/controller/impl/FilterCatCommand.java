@@ -29,12 +29,13 @@ public class FilterCatCommand implements Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         CatService catService = serviceFactory.getCatService();
         BreedService breedService = serviceFactory.getBreedService();
-        List<Breed> breedList = Arrays.stream(request.getParameterValues(BREED_PARAMETER)).map(x -> {
-            return new Breed(Integer.parseInt(x));
-        }).collect(Collectors.toList());
-        List<Gender> genderList = Arrays.stream(request.getParameterValues("gender")).map(x -> {
-            return Gender.getById(Integer.parseInt(x));
-        }).collect(Collectors.toList());
+        String[] breedParams = request.getParameterValues(BREED_PARAMETER);
+        String[] genderParams = request.getParameterValues("gender");
+        List<Breed> breedList = breedParams!= null ? Arrays.stream(breedParams).map(x -> {
+            return new Breed(Integer.parseInt(x));}).collect(Collectors.toList()) : null;
+        List<Gender> genderList = genderParams != null ? Arrays.stream(genderParams).map(x -> {
+            return Gender.getById(Integer.parseInt(x));}).collect(Collectors.toList()) : null;
+
         try {
             List<CatListViewModel> filteredCatList = catService.getAllFreeFilteredCats(breedList, genderList);
             List<Breed> breedListALL = breedService.getAll();

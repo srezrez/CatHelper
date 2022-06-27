@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.htp.jd2.util.ConstantPool.CAT_JSP_PATH;
-import static by.htp.jd2.util.ConstantPool.ID_CAT_PARAMETER;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class GoToCatPageCommand implements Command {
     @Override
@@ -29,7 +28,7 @@ public class GoToCatPageCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(CAT_JSP_PATH);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
 
     }

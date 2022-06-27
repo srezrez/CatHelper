@@ -40,9 +40,9 @@ public class AddCatCommand implements Command {
             catService.addCat(cat, fileName);
             response.sendRedirect(MAIN_PAGE_REDIRECT);
         } catch (ParseException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + VALIDATION_ERROR_MS);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

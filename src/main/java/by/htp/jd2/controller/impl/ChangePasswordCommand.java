@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.htp.jd2.util.ConstantPool.MAIN_PAGE_REDIRECT;
-import static by.htp.jd2.util.ConstantPool.PASSWORD_PARAMETER;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class ChangePasswordCommand implements Command {
     @Override
@@ -25,7 +24,7 @@ public class ChangePasswordCommand implements Command {
             userService.changePassword(((User)session.getAttribute("idUser")).getIdPk(), request.getParameter(PASSWORD_PARAMETER));
             response.sendRedirect(MAIN_PAGE_REDIRECT);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

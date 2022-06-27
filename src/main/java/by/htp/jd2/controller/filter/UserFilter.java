@@ -28,7 +28,7 @@ public class UserFilter implements Filter {
             return;
         }
         if(!command.equals(GO_TO_SIGN_IN_PAGE_COMMAND) && !command.equals(GO_TO_SIGN_UP_PAGE_COMMAND) && !command.equals(GO_TO_INDEX_PAGE_COMMAND)
-                && !command.equals(SIGN_IN_COMMAND) && !command.equals(SIGN_UP_COMMAND)
+                && !command.equals(SIGN_IN_COMMAND) && !command.equals(SIGN_UP_COMMAND) && !command.equals(GO_TO_ERROR_PAGE_COMMAND)
                 && session.getAttribute(USER_ATTRIBUTE) == null) {
             response.sendRedirect(INDEX_PAGE_REDIRECT);
             return;

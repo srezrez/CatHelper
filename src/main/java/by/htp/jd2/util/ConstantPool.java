@@ -78,6 +78,8 @@ public class ConstantPool {
 	public static final String SIGN_UP_USER_EXISTS_MESSAGE = "User with this email already exists";
 	public static final String SIGN_UP_SUCCESS_MESSAGE = "You've created new account!";
 	public static final String VALIDATION_ERROR_MS = "Fill the form again with correct values.";
+	public static final String BASIC_ERROR_MS = "Something went wrong. Please try again";
+	public static final String SEND_REQUEST_ERROR_MS = "Something went wrong. Maybe you already have active request for this cat.";
 
 	//db parameters
 	public static final String DB_DRIVER = "db.driver";

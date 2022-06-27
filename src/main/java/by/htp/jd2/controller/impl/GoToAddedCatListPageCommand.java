@@ -15,8 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static by.htp.jd2.util.ConstantPool.ADDED_CAT_LIST_JSP_PATH;
-import static by.htp.jd2.util.ConstantPool.USER_ATTRIBUTE;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class GoToAddedCatListPageCommand implements Command {
     @Override
@@ -31,7 +30,7 @@ public class GoToAddedCatListPageCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(ADDED_CAT_LIST_JSP_PATH);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

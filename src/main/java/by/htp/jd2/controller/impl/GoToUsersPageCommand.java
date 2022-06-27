@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static by.htp.jd2.util.ConstantPool.ADD_CAT_JSP;
-import static by.htp.jd2.util.ConstantPool.USER_LIST_JSP_PATH;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class GoToUsersPageCommand implements Command {
     @Override
@@ -27,7 +26,7 @@ public class GoToUsersPageCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(USER_LIST_JSP_PATH);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

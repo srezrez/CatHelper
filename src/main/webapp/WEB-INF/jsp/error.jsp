@@ -9,18 +9,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="header.jsp" />
 <div class="welcome-div" id="main-div">
 <%
 	String errorMs = (String)request.getParameter("error-ms");
 	if(errorMs != null) { 
 %>
-		<h2>
+		<h1>
 			<% out.println(errorMs);
 		
 	}
 %>
-</h2>
+</h1>
 </div>
 </body>
 </html>

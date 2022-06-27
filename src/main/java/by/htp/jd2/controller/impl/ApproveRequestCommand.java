@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.htp.jd2.util.ConstantPool.ID_REQUEST_PARAMETER;
-import static by.htp.jd2.util.ConstantPool.MAIN_PAGE_REDIRECT;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class ApproveRequestCommand implements Command {
     @Override
@@ -22,7 +21,7 @@ public class ApproveRequestCommand implements Command {
             requestService.approveRequest(Integer.parseInt(request.getParameter(ID_REQUEST_PARAMETER)));
             response.sendRedirect(MAIN_PAGE_REDIRECT);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

@@ -16,8 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 
-import static by.htp.jd2.util.ConstantPool.MAIN_PAGE_REDIRECT;
-import static by.htp.jd2.util.ConstantPool.USER_ATTRIBUTE;
+import static by.htp.jd2.util.ConstantPool.*;
 
 public class SendRequestCommand implements Command {
     @Override
@@ -31,7 +30,7 @@ public class SendRequestCommand implements Command {
             requestService.sendRequest(req);
             response.sendRedirect(MAIN_PAGE_REDIRECT);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + SEND_REQUEST_ERROR_MS);
         }
 
     }

@@ -30,7 +30,7 @@ public class FilterRequestsCommand implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(REQUESTS_JSP_PATH);
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
         }
     }
 }

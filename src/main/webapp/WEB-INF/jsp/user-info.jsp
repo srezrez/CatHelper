@@ -14,7 +14,7 @@
 <head>
   <meta charset="utf-8">
   <link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
-  <title>Title</title>
+  <title><fmt:message bundle="${loc}" key="ttl.account" /></title>
 </head>
 <body>
 <jsp:include page="header.jsp" />

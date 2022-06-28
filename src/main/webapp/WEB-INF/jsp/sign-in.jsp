@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title><fmt:message bundle="${loc}" key="ttl.signin" /></title>
 <link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registration page</title>
+<title><fmt:message bundle="${loc}" key="ttl.signup" /></title>
 <link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>

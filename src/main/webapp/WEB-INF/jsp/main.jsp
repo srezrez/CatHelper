@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <link href="resources/css/styles.css" type="text/css" rel="stylesheet" />
-<title>Insert title here</title>
+<title><fmt:message bundle="${loc}" key="ttl.main" /></title>
 </head>
 <body>
 <jsp:include page="header.jsp" />

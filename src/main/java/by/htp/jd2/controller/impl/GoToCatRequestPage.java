@@ -24,7 +24,12 @@ public class GoToCatRequestPage implements Command {
         ServiceFactory factory = ServiceFactory.getInstance();
         RequestService requestService = factory.getRequestService();
         CatService catService = factory.getCatService();
-        CatRequestViewModel catRequest = requestService.getCatRequestInfo(Integer.parseInt(request.getParameter(ID_CAT_PARAMETER)));
+        CatRequestViewModel catRequest = null;
+        try {
+            catRequest = requestService.getCatRequestInfo(Integer.parseInt(request.getParameter(ID_CAT_PARAMETER)));
+        } catch (ServiceException e) {
+            response.sendRedirect(ERROR_PAGE_REDIRECT + "&" + ERROR_MS_PARAMETER + "=" + BASIC_ERROR_MS);
+        }
         try {
             Cat cat = catService.getCat(Integer.parseInt(request.getParameter(ID_CAT_PARAMETER)));
             request.setAttribute("cat", cat);

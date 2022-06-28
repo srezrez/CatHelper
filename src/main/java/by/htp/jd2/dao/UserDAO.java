@@ -5,6 +5,6 @@ import by.htp.jd2.entity.User;
 import java.sql.SQLException;
 
 public interface UserDAO extends BaseDAO<User>{
-    User getByEmail(String email);
+    User getByEmail(String email) throws DAOException;
     void updateActivity(User user) throws DAOException;
 }

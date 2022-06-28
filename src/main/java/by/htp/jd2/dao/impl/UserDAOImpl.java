@@ -28,10 +28,12 @@ public class UserDAOImpl implements UserDAO {
     public int add(User user) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet generatedKeys = null;
         int idUser = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());
@@ -42,19 +44,21 @@ public class UserDAOImpl implements UserDAO {
             ps.setInt(7, user.getRole().getIdPk());
 
             ps.executeUpdate();
-            ResultSet generatedKeys = ps.getGeneratedKeys();
+            generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 idUser = generatedKeys.getInt(1);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in UserDao add");
         } finally {
             try {
+                generatedKeys.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Exception in UserDao add");
             }
         }
         return idUser;
@@ -63,20 +67,22 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void delete(int idPk) throws DAOException {
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_DELETE_USER);
+            ps = con.prepareStatement(SQL_DELETE_USER);
             ps.setInt(1,  idPk);
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in UserDao delete");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in UserDao delete");
             }
         }
     }
@@ -85,29 +91,33 @@ public class UserDAOImpl implements UserDAO {
     public User get(int idPk) throws DAOException  {
         User user = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_USER);
+            ps = con.prepareStatement(SQL_SELECT_USER);
             ps.setString(1, String.valueOf(idPk));
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 user = createUser(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in UserDao get");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in UserDao get");
             }
         }
         return user;
     }
 
-    private User createUser(ResultSet rs){
+    private User createUser(ResultSet rs) throws DAOException {
         User user = new User();
         try {
             user.setIdPk(rs.getInt("id_user"));
@@ -119,7 +129,7 @@ public class UserDAOImpl implements UserDAO {
             user.setRole(Role.getById(rs.getInt("id_role")));
             user.setActivity(Activity.getById(rs.getInt("id_activity")));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException("Exception in UserDao createUser");
         }
         return user;
     }
@@ -127,21 +137,23 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User entity) throws DAOException {
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_UPDATE_USER);
+            ps = con.prepareStatement(SQL_UPDATE_USER);
             ps.setString(1, entity.getPassword());
             ps.setInt(2, entity.getIdPk());
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in UserDao update");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in UserDao update");
             }
         }
 
@@ -151,48 +163,56 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<User>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_USER);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_USER);
             while(rs.next()) {
                 users.add(createUser(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in UserDao getAll");
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in UserDao getAll");
             }
         }
         return users;
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getByEmail(String email) throws DAOException {
         User user = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
+            ps = con.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
             ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 user = createUser(rs);
             }
         } catch (ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new DAOException("Exception in UserDao getByEmail");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Exception in UserDao getByEmail");
             }
         }
         return user;
@@ -201,21 +221,23 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void updateActivity(User user) throws DAOException {
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_UPDATE_USER_ACTIVITY);
+            ps = con.prepareStatement(SQL_UPDATE_USER_ACTIVITY);
             ps.setInt(1, user.getActivity().getIdPk());
             ps.setInt(2, user.getIdPk());
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in UserDao updateActivity");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in UserDao updateActivity");
             }
         }
     }

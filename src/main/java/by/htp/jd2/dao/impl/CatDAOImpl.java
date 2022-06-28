@@ -28,10 +28,12 @@ public class CatDAOImpl implements CatDAO {
     public int add(Cat cat) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet generatedKeys = null;
         int idCat = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_CAT, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(SQL_INSERT_CAT, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, cat.getName());
             ps.setDate(2, new java.sql.Date(cat.getBirthDate().getTime()));
@@ -41,19 +43,21 @@ public class CatDAOImpl implements CatDAO {
             ps.setString(6, cat.getDescription());
 
             ps.executeUpdate();
-            ResultSet generatedKeys = ps.getGeneratedKeys();
+            generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 idCat = generatedKeys.getInt(1);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao add");
         } finally {
             try {
+                generatedKeys.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Exception in CatDao add");
             }
         }
         return idCat;
@@ -63,20 +67,22 @@ public class CatDAOImpl implements CatDAO {
     public void delete(int idPk) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_DELETE_CAT);
+            ps = con.prepareStatement(SQL_DELETE_CAT);
             ps.setInt(1,  idPk);
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in CatDao delete");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in CatDao delete");
             }
         }
     }
@@ -85,23 +91,27 @@ public class CatDAOImpl implements CatDAO {
     public Cat get(int idPk) throws DAOException {
         Cat cat = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_CAT);
+            ps = con.prepareStatement(SQL_SELECT_CAT);
             ps.setString(1, String.valueOf(idPk));
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 cat = createCat(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao get");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in CatDao get");
             }
         }
         return cat;
@@ -118,7 +128,7 @@ public class CatDAOImpl implements CatDAO {
             cat.setGender(Gender.getById(rs.getInt("id_gender")));
             cat.setDescription(rs.getString("description"));
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao createCat");
         }
         return cat;
     }
@@ -132,24 +142,28 @@ public class CatDAOImpl implements CatDAO {
     public List<Cat> getAll() throws DAOException {
         List<Cat> cats = new ArrayList<Cat>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_CAT);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_CAT);
             while(rs.next()) {
                 cats.add(createCat(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao getAll");
         } catch (DAOException e) {
             e.printStackTrace();
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in CatDao getAll");
             }
         }
         return cats;
@@ -159,24 +173,28 @@ public class CatDAOImpl implements CatDAO {
     public List<Cat> getAllFreeCats() throws DAOException {
         List<Cat> cats = new ArrayList<Cat>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT);
             while(rs.next()) {
                 cats.add(createCat(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao getAllFreeCats");
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new DAOException("Exception in CatDao getAllFreeCats");
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in CatDao getAllFreeCats");
             }
         }
         return cats;
@@ -186,26 +204,29 @@ public class CatDAOImpl implements CatDAO {
     public List<Cat> getAllAddedActiveCats(int idUser) throws DAOException {
         List<Cat> cats = new ArrayList<Cat>();
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL_ADDED_ACTIVE_CAT);
+            ps = con.prepareStatement(SQL_SELECT_ALL_ADDED_ACTIVE_CAT);
             ps.setInt(1, idUser);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()) {
                 cats.add(createCat(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in CatDao getAllAddedActiveCats");
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new DAOException("Exception in CatDao getAllAddedActiveCats");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in CatDao getAllAddedActiveCats");
             }
         }
         return cats;

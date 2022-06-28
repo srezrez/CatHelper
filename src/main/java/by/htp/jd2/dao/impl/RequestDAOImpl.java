@@ -32,10 +32,12 @@ public class RequestDAOImpl implements RequestDAO {
     @Override
     public int add(Request request) throws DAOException {
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet generatedKeys = null;
         int idRequest = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_REQUEST, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(SQL_INSERT_REQUEST, Statement.RETURN_GENERATED_KEYS);
             ps.setTimestamp(1, new Timestamp(request.getDateRequest().getTime()));
             ps.setDate(2, null);
             ps.setInt(3, request.getRequester().getIdPk());
@@ -43,19 +45,21 @@ public class RequestDAOImpl implements RequestDAO {
             ps.setInt(5, request.getStatus().getIdPk());
 
             ps.executeUpdate();
-            ResultSet generatedKeys = ps.getGeneratedKeys();
+            generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 idRequest = generatedKeys.getInt(1);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao add");
         } finally {
             try {
+                generatedKeys.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Exception in RequestDao add");
             }
         }
         return idRequest;
@@ -65,20 +69,22 @@ public class RequestDAOImpl implements RequestDAO {
     public void delete(int idPk) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_DELETE_REQUEST);
+            ps = con.prepareStatement(SQL_DELETE_REQUEST);
             ps.setInt(1,  idPk);
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in RequestDao delete");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao delete");
             }
         }
     }
@@ -87,29 +93,33 @@ public class RequestDAOImpl implements RequestDAO {
     public Request get(int idPk) throws DAOException {
         Request request = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUEST);
+            ps = con.prepareStatement(SQL_SELECT_REQUEST);
             ps.setString(1, String.valueOf(idPk));
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 request = createRequest(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao get");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao get");
             }
         }
         return request;
     }
 
-    private Request createRequest(ResultSet rs) {
+    private Request createRequest(ResultSet rs) throws DAOException {
 
         Request request = new Request();
         try {
@@ -121,7 +131,7 @@ public class RequestDAOImpl implements RequestDAO {
             request.setStatus(Status.getById(rs.getInt("id_status")));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException("Exception in RequestDao createRequest");
         }
         return request;
     }
@@ -130,22 +140,24 @@ public class RequestDAOImpl implements RequestDAO {
     public void update(Request request) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_UPDATE_REQUEST);
+            ps = con.prepareStatement(SQL_UPDATE_REQUEST);
             ps.setTimestamp(1, new Timestamp(request.getDateRequest().getTime()));
             ps.setInt(2, request.getStatus().getIdPk());
             ps.setInt(3, request.getIdPk());
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in RequestDao update");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao update");
             }
         }
     }
@@ -154,22 +166,26 @@ public class RequestDAOImpl implements RequestDAO {
     public List<Request> getAll() throws DAOException {
         List<Request> requests = new ArrayList<Request>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_REQUEST);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_REQUEST);
             while(rs.next()) {
                 requests.add(createRequest(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getAll");
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getAll");
             }
         }
         return requests;
@@ -179,23 +195,27 @@ public class RequestDAOImpl implements RequestDAO {
     public int getRequestAmountByCatId(int idCat) throws DAOException {
         int amount = 0;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
+            ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
             ps.setInt(1, idCat);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 amount = rs.getInt("count(*)");
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getRequestAmountByCatId");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getRequestAmountByCatId");
             }
         }
         return amount;
@@ -205,24 +225,28 @@ public class RequestDAOImpl implements RequestDAO {
     public List<Request> getRequestsByUserIdAndStatus(int idUser, int idStatus) throws DAOException {
         List<Request> requests = new ArrayList<Request>();
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUESTS_BY_USER_ID);
+            ps = con.prepareStatement(SQL_SELECT_REQUESTS_BY_USER_ID);
             ps.setInt(1, idUser);
             ps.setInt(2, idStatus);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()) {
                 requests.add(createRequest(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getRequestsByUserIdAndStatus");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getRequestsByUserIdAndStatus");
             }
         }
         return requests;
@@ -232,24 +256,28 @@ public class RequestDAOImpl implements RequestDAO {
     public int getQueueAmount(int idCat, java.util.Date requestDate) throws DAOException {
         int amount = 0;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_REQUEST_QUEUE_AMOUNT);
+            ps = con.prepareStatement(SQL_SELECT_REQUEST_QUEUE_AMOUNT);
             ps.setInt(1, idCat);
             ps.setTimestamp(2, new Timestamp(requestDate.getTime()));
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 amount = rs.getInt("count(*)");
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getQueueAmount");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getQueueAmount");
             }
         }
         return amount;
@@ -258,21 +286,23 @@ public class RequestDAOImpl implements RequestDAO {
     @Override
     public void cancelRequest(int idRequest) throws DAOException {
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_CANCEL_REQUEST);
+            ps = con.prepareStatement(SQL_CANCEL_REQUEST);
             ps.setInt(1, Status.REQUEST_CANCELED.getIdPk());
             ps.setInt(2, idRequest);
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in RequestDao cancelRequest");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao cancelRequest");
             }
         }
     }
@@ -281,23 +311,27 @@ public class RequestDAOImpl implements RequestDAO {
     public int getRequestQueueAmount(int idCat) throws DAOException {
         int amount = 0;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
+            ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_AMOUNT_FOR_CAT);
             ps.setInt(1, idCat);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 amount = rs.getInt("count(*)");
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getRequestQueueAmount");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getRequestQueueAmount");
             }
         }
         return amount;
@@ -307,23 +341,27 @@ public class RequestDAOImpl implements RequestDAO {
     public Request getFirstActiveRequestByCat(int idCat) throws DAOException {
         Request request = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_FIRST_ACTIVE_REQUEST);
+            ps = con.prepareStatement(SQL_SELECT_FIRST_ACTIVE_REQUEST);
             ps.setInt(1, idCat);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 request = createRequest(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getFirstActiveRequestByCat");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getFirstActiveRequestByCat");
             }
         }
         return request;
@@ -333,24 +371,28 @@ public class RequestDAOImpl implements RequestDAO {
     public Request getActiveRequestByCatAndUser(int idCat, int idUser) throws DAOException {
         Request request = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_BY_CAT_AND_USER);
+            ps = con.prepareStatement(SQL_SELECT_ACTIVE_REQUEST_BY_CAT_AND_USER);
             ps.setInt(1, idCat);
             ps.setInt(2, idUser);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 request = createRequest(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in RequestDao getActiveRequestByCatAndUser");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in RequestDao getActiveRequestByCatAndUser");
             }
         }
         return request;

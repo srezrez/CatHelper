@@ -26,29 +26,33 @@ public class DocumentDAOImpl implements DocumentDAO {
     public int add(Document document) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet generatedKeys = null;
         int docId = 0;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT_DOCUMENT, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(SQL_INSERT_DOCUMENT, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, document.getPath());
             ps.setString(2, document.getDescription());
             ps.setInt(3, document.getCat().getIdPk());
             ps.setInt(4, document.getDocumentType().getIdPk());
             ps.executeUpdate();
-            ResultSet generatedKeys = ps.getGeneratedKeys();
+            generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 docId = generatedKeys.getInt(1);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in DocumentDao add");
         } finally {
             try {
+                generatedKeys.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Exception in DocumentDao add");
             }
         }
         return docId;
@@ -58,20 +62,22 @@ public class DocumentDAOImpl implements DocumentDAO {
     public void delete(int idPk) throws DAOException {
 
         Connection con = null;
+        PreparedStatement ps = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_DELETE_DOCUMENT);
+            ps = con.prepareStatement(SQL_DELETE_DOCUMENT);
             ps.setInt(1,  idPk);
             ps.executeUpdate();
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new DAOException("Exception in DocumentDao delete");
         } finally {
             try {
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in DocumentDao delete");
             }
         }
     }
@@ -80,29 +86,33 @@ public class DocumentDAOImpl implements DocumentDAO {
     public Document get(int idPk) throws DAOException {
         Document document = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_DOCUMENT);
+            ps = con.prepareStatement(SQL_SELECT_DOCUMENT);
             ps.setString(1, String.valueOf(idPk));
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while(rs.next()){
                 document = createDocument(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in DocumentDao get");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in DocumentDao get");
             }
         }
         return document;
     }
 
-    private Document createDocument(ResultSet rs) {
+    private Document createDocument(ResultSet rs) throws DAOException {
 
         Document document = new Document();
         try {
@@ -111,7 +121,7 @@ public class DocumentDAOImpl implements DocumentDAO {
             document.setCat(new Cat(rs.getInt("id_cat")));
             document.setDocumentType(DocumentType.getById(rs.getInt("id_document_type")));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException("Exception in DocumentDao createDocument");
         }
         return document;
     }
@@ -125,22 +135,26 @@ public class DocumentDAOImpl implements DocumentDAO {
     public List<Document> getAll() throws DAOException {
         List<Document> documents = new ArrayList<Document>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_DOCUMENT);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_DOCUMENT);
             while(rs.next()) {
                 documents.add(createDocument(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in DocumentDao getAll");
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in DocumentDao getAll");
             }
         }
         return documents;
@@ -150,22 +164,26 @@ public class DocumentDAOImpl implements DocumentDAO {
     public List<Document> getAllFreeCatPhoto() throws DAOException {
         List<Document> documents = new ArrayList<Document>();
         Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT_PHOTO);
+            st = con.createStatement();
+            rs = st.executeQuery(SQL_SELECT_ALL_FREE_CAT_PHOTO);
             while(rs.next()) {
                 documents.add(createDocument(rs));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in DocumentDao getAllFreeCatPhoto");
         } finally {
             try {
+                rs.close();
+                st.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in DocumentDao getAllFreeCatPhoto");
             }
         }
         return documents;
@@ -175,23 +193,26 @@ public class DocumentDAOImpl implements DocumentDAO {
     public Document getByCatId(int idCat) throws DAOException {
         Document document = null;
         Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = connectionPool.takeConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT_DOCUMENT_BY_CAT_ID);
-            ps.setInt(1, idCat);
-            ResultSet rs = ps.executeQuery();
+            ps = con.prepareStatement(SQL_SELECT_DOCUMENT_BY_CAT_ID);
+            rs = ps.executeQuery();
             while(rs.next()){
                 document = createDocument(rs);
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection pool exception");
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Exception in DocumentDao getByCatId");
         } finally {
             try {
+                rs.close();
+                ps.close();
                 con.close();
             } catch (SQLException e) {
-                throw new DAOException(e);
+                throw new DAOException("Exception in DocumentDao getByCatId");
             }
         }
         return document;

@@ -35,7 +35,7 @@
 			<label><fmt:message bundle="${loc}" key="lbl.female" /></label>
 		</div>
 		<div id="buttons">
-			<input type="submit" id="table-btn" value=<fmt:message bundle="${loc}" key="btn.submit" />/>
+			<input type="submit" id="table-btn" value=<fmt:message bundle="${loc}" key="btn.submit" />>
 		</div>
 	</div>
 	</form>

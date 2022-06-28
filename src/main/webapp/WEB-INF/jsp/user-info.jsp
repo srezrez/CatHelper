@@ -37,7 +37,7 @@
   <input id="password" type="password" placeholder=<fmt:message bundle="${loc}" key="input.password" /> name="password" minlength="10" maxlength="25"/>
   <span class="error" aria-live="polite"></span>
   <br />
-  <input id="confirm-password" placeholder=<fmt:message bundle="${loc}" key="input.confirmpassword" /> name="confirm-password" type="password" />
+  <input id="confirm-password" placeholder="<fmt:message bundle="${loc}" key="input.confirmpassword" />" name="confirm-password" type="password" />
   <span class="error" aria-live="polite"></span>
   <br />
   <div id="buttons">

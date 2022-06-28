@@ -7,7 +7,7 @@
     <a href="#default" class="logo">Cat Helper</a>
     <div class="header-right">
         <a id="change-locale-url" href="">RU/ENG</a>
-        <a class="active" href="MyController?command=GO_TO_PROFILE_PAGE">Name Surname</a>
+        <a class="active" href="MyController?command=GO_TO_PROFILE_PAGE">${user.name} ${user.surname}</a>
         <a href="#contact"><fmt:message bundle="${loc}" key="menu.contact" /></a>
         <a href="#about"><fmt:message bundle="${loc}" key="menu.about" /></a>
         <a href="MyController?command=LOG_OUT"><fmt:message bundle="${loc}" key="menu.logout" /></a>

@@ -66,7 +66,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public CatRequestViewModel getCatRequestInfo(int idCat) {
+    public CatRequestViewModel getCatRequestInfo(int idCat) throws ServiceException {
         CatRequestViewModel catRequest = new CatRequestViewModel();
         try {
             catRequest.setRequestAmount(requestDao.getRequestAmountByCatId(idCat));
@@ -74,7 +74,7 @@ public class RequestServiceImpl implements RequestService {
             catRequest.setRequester(userDao.get(request.getRequester().getIdPk()));
             catRequest.setIdPk(request.getIdPk());
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new ServiceException("Exception in getCatRequestInfo");
         }
         return catRequest;
     }

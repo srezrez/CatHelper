@@ -24,7 +24,12 @@ public class UserServiceImpl implements UserService {
     public User signIn(String email, String password) throws ServiceException {
         if(!userValidation.signInValidation(email, password))
             throw new ServiceException("User Validation Exception");
-        User user = userDAO.getByEmail(email);
+        User user = null;
+        try {
+            user = userDAO.getByEmail(email);
+        } catch (DAOException e) {
+            throw new ServiceException("Exception in signIn");
+        }
         if(user == null || user.getActivity() == Activity.BLOCKED || !((BCrypt.verifyer().verify(password.toCharArray(), user.getPassword())).verified)) {
             return null;
         }
@@ -68,12 +73,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(int idUser) {
+    public User get(int idUser) throws ServiceException {
         User user = null;
         try {
             user = userDAO.get(idUser);
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new ServiceException("Exception in User get");
         }
         return user;
     }

@@ -10,7 +10,7 @@ public interface RequestService {
     void sendRequest(Request request) throws ServiceException;
     List<RequestViewModel> getRequests(int idUser, int idStatus) throws ServiceException;
     void cancelRequest(int idRequest) throws ServiceException;
-    CatRequestViewModel getCatRequestInfo (int idCat);
+    CatRequestViewModel getCatRequestInfo (int idCat) throws ServiceException;
     void approveRequest(int idPk) throws ServiceException;
     void rejectRequest(int idPk) throws ServiceException;
 }

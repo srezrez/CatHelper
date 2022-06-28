@@ -10,6 +10,6 @@ public interface UserService {
     boolean signUp(User user) throws ServiceException;
     List<User> getAll() throws ServiceException;
     void changeActivity(int idUser) throws ServiceException;
-    User get(int idUser);
+    User get(int idUser) throws ServiceException;
     void changePassword(int idUser, String password) throws ServiceException;
 }

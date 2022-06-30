@@ -14,13 +14,13 @@
     </div>
 </div>
 <ul class="header">
-    <li><a id="all-cats" href="MyController?command=GO_TO_MAIN_PAGE"><fmt:message bundle="${loc}" key="menu.allcats" /></a></li>
-    <li><a id="added-cats" href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE"><fmt:message bundle="${loc}" key="menu.addedcats" /></a></li>
-    <li><a id="requests" href="MyController?command=FILTER_REQUESTS&status=1"><fmt:message bundle="${loc}" key="menu.myrequests" /></a></li>
+    <li><a class="menu-toggle" data-theme="default" id="all-cats" href="MyController?command=GO_TO_MAIN_PAGE"><fmt:message bundle="${loc}" key="menu.allcats" /></a></li>
+    <li><a class="menu-toggle" data-theme="dark" id="added-cats" href="MyController?command=GO_TO_ADDED_CAT_LIST_PAGE"><fmt:message bundle="${loc}" key="menu.addedcats" /></a></li>
+    <li><a class="menu-toggle" data-theme="light" id="requests" href="MyController?command=FILTER_REQUESTS&status=1"><fmt:message bundle="${loc}" key="menu.myrequests" /></a></li>
     <c:if test="${sessionScope.user.role.idPk == 1}">
-        <li><a id="users" href="MyController?command=GO_TO_USERS_PAGE"><fmt:message bundle="${loc}" key="menu.users" /></a></li>
+        <li><a class="menu-toggle" id="users" href="MyController?command=GO_TO_USERS_PAGE"><fmt:message bundle="${loc}" key="menu.users" /></a></li>
     </c:if>
-    <li><a id="add-cat" href="MyController?command=GO_TO_ADD_CAT_PAGE"><fmt:message bundle="${loc}" key="msg.addcat" /></a></li>
+    <li><a class="menu-toggle" id="add-cat" href="MyController?command=GO_TO_ADD_CAT_PAGE"><fmt:message bundle="${loc}" key="msg.addcat" /></a></li>
 </ul>
 
 <script src="resources/js/jquery.js"></script>

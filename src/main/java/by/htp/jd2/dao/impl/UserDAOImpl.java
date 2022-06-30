@@ -41,7 +41,7 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPassword());
             ps.setInt(6, user.getRole().getIdPk());
-            ps.setInt(7, user.getRole().getIdPk());
+            ps.setInt(7, user.getActivity().getIdPk());
 
             ps.executeUpdate();
             generatedKeys = ps.getGeneratedKeys();

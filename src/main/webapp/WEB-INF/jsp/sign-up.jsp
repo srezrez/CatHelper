@@ -21,7 +21,7 @@
 	<input id="surname" type="text" placeholder="<fmt:message bundle="${loc}" key="input.surname" />" name="surname" minlength="2" maxlength="25"/>
 	<span class="error" aria-live="polite"></span>
 	<br />
-	<input id="birth-date" type="date" name="birth-date" min="2018-01-01" max="2018-12-31" value="2018-07-22">
+	<input id="birth-date" type="date" name="birth-date" min="1950-01-01" max="2010-01-01">
 	<br />
 	<input id="email" type="email" placeholder="<fmt:message bundle="${loc}" key="input.email" />" name="email" minlength="8" maxlength="50"/>
 	<span class="error" aria-live="polite"></span>
@@ -39,6 +39,9 @@
 	<h5><fmt:message bundle="${loc}" key="msg.gotomain" /> <a href="MyController?command=GO_TO_INDEX_PAGE"><fmt:message bundle="${loc}" key="msg.mainpage" /></a></h5>
 	
 </form>
-	<script src="resources/js/sign-up-validation.js"></script>
 </body>
+
+<script src="resources/js/jquery.js"></script>
+<script src="resources/js/sign-up-validation.js"></script>
 </html>
+

@@ -23,12 +23,12 @@
         <input type="hidden" name="command" value="add-cat">
         <h1><fmt:message bundle="${loc}" key="msg.addcat"/></h1>
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.name"/></label>
-        <input name="name" id="name" type="text" minlength="2" maxlength="25" placeholder="Имя"/>
+        <input name="name" id="name" type="text" minlength="2" maxlength="25" placeholder="Имя" required/>
         <span class="error" aria-live="polite"></span>
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.birthDate"/></label>
-        <input id="birth-date" type="date" name="birth-date" min="2018-01-01">
+        <input id="birth-date" type="date" name="birth-date" min="2010-01-01" max="2022-06-01" required>
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.breed"/></label>
-        <select name="breed" class="breed-class">
+        <select name="breed" class="breed-class" required>
             <c:forEach items="${breedList}" var="breed">
                 <option value=${breed.idPk}>${breed.title}</option>
             </c:forEach>
@@ -45,10 +45,10 @@
         </div>
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.description"/></label>
         <textarea name="description" rows="5" cols="70" placeholder=<fmt:message bundle="${loc}"
-                                                                                 key="lbl.description"/>></textarea>
+                                                                                 key="lbl.description"/> required></textarea>
 
         <label class="label-for-form"><fmt:message bundle="${loc}" key="lbl.photo"/></label>
-        <input name="catPhoto" type="file">
+        <input name="catPhoto" type="file" required>
 
         <div id="buttons">
             <input type="submit" value=<fmt:message bundle="${loc}" key="btn.addcat"/>/>

@@ -12,7 +12,7 @@
 <body>
 <c:set var="local" scope="session" value="ru"/>
 <div class="welcome-div">
-<h1>Welcome to my application</h1>
+<h1>Welcome to Cat Helper</h1>
 
 <form class="welcome-btn" action="MyController" method="get">
 	<input type="hidden" name="command" value="GO_TO_SIGN_UP_PAGE">

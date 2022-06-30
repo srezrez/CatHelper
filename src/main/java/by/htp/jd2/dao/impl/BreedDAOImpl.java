@@ -43,9 +43,9 @@ public class BreedDAOImpl implements BreedDAO {
             throw new DAOException("Exception in BreedDao add");
         } finally {
             try {
-                generatedKeys.close();
-                ps.close();
-                con.close();
+                if(generatedKeys != null) generatedKeys.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in BreedDao add");
             }
@@ -69,8 +69,8 @@ public class BreedDAOImpl implements BreedDAO {
             throw new DAOException("Exception in BreedDao delete");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in BreedDao delete");
             }
@@ -97,9 +97,9 @@ public class BreedDAOImpl implements BreedDAO {
             throw new DAOException("Exception in BreedDao get");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in BreedDao get");
             }
@@ -131,9 +131,9 @@ public class BreedDAOImpl implements BreedDAO {
             throw new DAOException("Exception in BreedDao update");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in BreedDao update");
             }

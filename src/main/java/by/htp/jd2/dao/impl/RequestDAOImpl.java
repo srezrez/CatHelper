@@ -55,9 +55,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao add");
         } finally {
             try {
-                generatedKeys.close();
-                ps.close();
-                con.close();
+                if(generatedKeys != null) generatedKeys.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao add");
             }
@@ -81,8 +81,8 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao delete");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao delete");
             }
@@ -109,9 +109,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao get");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao get");
             }
@@ -154,8 +154,8 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao update");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao update");
             }
@@ -181,9 +181,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getAll");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getAll");
             }
@@ -211,9 +211,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getRequestAmountByCatId");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getRequestAmountByCatId");
             }
@@ -242,9 +242,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getRequestsByUserIdAndStatus");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getRequestsByUserIdAndStatus");
             }
@@ -273,9 +273,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getQueueAmount");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getQueueAmount");
             }
@@ -299,8 +299,8 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao cancelRequest");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao cancelRequest");
             }
@@ -327,9 +327,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getRequestQueueAmount");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getRequestQueueAmount");
             }
@@ -357,9 +357,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getFirstActiveRequestByCat");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getFirstActiveRequestByCat");
             }
@@ -388,9 +388,9 @@ public class RequestDAOImpl implements RequestDAO {
             throw new DAOException("Exception in RequestDao getActiveRequestByCatAndUser");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in RequestDao getActiveRequestByCatAndUser");
             }

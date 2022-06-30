@@ -53,9 +53,9 @@ public class CatDAOImpl implements CatDAO {
             throw new DAOException("Exception in CatDao add");
         } finally {
             try {
-                generatedKeys.close();
-                ps.close();
-                con.close();
+                if(generatedKeys != null) generatedKeys.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao add");
             }
@@ -79,8 +79,8 @@ public class CatDAOImpl implements CatDAO {
             throw new DAOException("Exception in CatDao delete");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao delete");
             }
@@ -107,9 +107,9 @@ public class CatDAOImpl implements CatDAO {
             throw new DAOException("Exception in CatDao get");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao get");
             }
@@ -159,9 +159,9 @@ public class CatDAOImpl implements CatDAO {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao getAll");
             }
@@ -190,9 +190,9 @@ public class CatDAOImpl implements CatDAO {
             throw new DAOException("Exception in CatDao getAllFreeCats");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao getAllFreeCats");
             }
@@ -222,9 +222,9 @@ public class CatDAOImpl implements CatDAO {
             throw new DAOException("Exception in CatDao getAllAddedActiveCats");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in CatDao getAllAddedActiveCats");
             }

@@ -54,9 +54,9 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao add");
         } finally {
             try {
-                generatedKeys.close();
-                ps.close();
-                con.close();
+                if(generatedKeys != null) generatedKeys.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao add");
             }
@@ -79,8 +79,8 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao delete");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao delete");
             }
@@ -107,9 +107,9 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao get");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao get");
             }
@@ -150,8 +150,8 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao update");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao update");
             }
@@ -178,9 +178,9 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao getAll");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao getAll");
             }
@@ -208,9 +208,9 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao getByEmail");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao getByEmail");
             }
@@ -234,8 +234,8 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException("Exception in UserDao updateActivity");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in UserDao updateActivity");
             }

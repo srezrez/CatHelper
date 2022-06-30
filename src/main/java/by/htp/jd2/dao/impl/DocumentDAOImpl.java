@@ -48,9 +48,9 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao add");
         } finally {
             try {
-                generatedKeys.close();
-                ps.close();
-                con.close();
+                if(generatedKeys != null) generatedKeys.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao add");
             }
@@ -74,8 +74,8 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao delete");
         } finally {
             try {
-                ps.close();
-                con.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao delete");
             }
@@ -102,9 +102,9 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao get");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao get");
             }
@@ -150,9 +150,9 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao getAll");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao getAll");
             }
@@ -179,9 +179,9 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao getAllFreeCatPhoto");
         } finally {
             try {
-                rs.close();
-                st.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(st != null) st.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao getAllFreeCatPhoto");
             }
@@ -198,6 +198,7 @@ public class DocumentDAOImpl implements DocumentDAO {
         try {
             con = connectionPool.takeConnection();
             ps = con.prepareStatement(SQL_SELECT_DOCUMENT_BY_CAT_ID);
+            ps.setInt(1, idCat);
             rs = ps.executeQuery();
             while(rs.next()){
                 document = createDocument(rs);
@@ -208,9 +209,9 @@ public class DocumentDAOImpl implements DocumentDAO {
             throw new DAOException("Exception in DocumentDao getByCatId");
         } finally {
             try {
-                rs.close();
-                ps.close();
-                con.close();
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null)con.close();
             } catch (SQLException e) {
                 throw new DAOException("Exception in DocumentDao getByCatId");
             }
